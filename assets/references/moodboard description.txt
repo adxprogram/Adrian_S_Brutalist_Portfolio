@@ -1,0 +1,32 @@
+========================================================================
+BRUTALIST PORTFOLIO MOODBOARD DESIGN SYSTEM
+========================================================================
+
+--- TYPOGRAPHY ---------------------------------------------------------
+• Font 1 (Headings): 
+  - Name: Syncopate
+  - Import: https://googleapis.com
+  - Style: All capitals, heavy bold, wide letter spacing, high-impact presence.
+  
+• Font 2 (Body Text & Links): 
+  - Name: Inter
+  - Import: https://googleapis.com
+  - Style: Bold weight, clean sans-serif utilitarian layout.
+
+--- COLOR PALETTE ------------------------------------------------------
+• Primary Typography (Row 1): Pure Black (#000000)
+• Secondary Typography (Row 2): Stark Clinical White (#FFFFFF)
+• Background Base Tone: Mid Concrete Gray (#A6A6A6)
+
+--- TEXTURE & NOISE REFINEMENT -----------------------------------------
+• Global Background: Flat, solid concrete gray canvas layer.
+• Texture Overlay Rules:
+  - Do NOT apply texture noise globally to all sections.
+  - Apply the high-contrast monochrome digital screen grain exclusively to the primary hero showcase grid wrapper.
+  - Subsections and secondary layouts must retain clean, sharp, solid gray structural blocks for layout contrast.
+
+--- VISUAL ARRANGEMENT REFERENCE ----------------------------------------
+• Top Navigation: Low-profile, wide horizontal tracking menu items aligned seamlessly on a solid base.
+• Left Pane Component: Giant, screen-dominant asymmetrical uppercase type layout stacking Black text directly over White text.
+• Right Pane Component: Full-bleed, high-contrast black-and-white portrait cut slicing the edge of the layout grid.
+========================================================================

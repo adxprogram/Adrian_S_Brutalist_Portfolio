@@ -1,0 +1,32 @@
+.tracker-indicator {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.indicator-core {
+    width: 6px;
+    height: 6px;
+    background-color: #00FF66;
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 6px #00FF66;
+}
+
+.indicator-pulse {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(0, 255, 102, 0.4);
+    animation: trackerPulse 2s infinite ease-out;
+}
+
+@keyframes trackerPulse {
+    0% { transform: scale(0.8); opacity: 0.8; }
+    70% { transform: scale(2.2); opacity: 0; }
+    100% { transform: scale(2.2); opacity: 0; }
+}
