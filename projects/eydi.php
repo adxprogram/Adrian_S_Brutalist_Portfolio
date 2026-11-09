@@ -12,7 +12,7 @@ foreach ($projects as $idx => $p) {
         break;
     }
 }
-if (!$currentProject) { header('Location: ../projects.php'); exit; }
+if (!$currentProject) { header('Location: ../index.php#projects'); exit; }
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <main class="case-study-wrapper" role="main">
@@ -30,7 +30,7 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="page-placeholder-card">
             <span class="card-status">[ SYSTEM ARCHITECTURE // <?= htmlspecialchars($currentProject['title']) ?> ]</span>
             <p>Minimalist editorial showcase combining variable typography, fluid layout grids, and performance-tuned micro-interactions running at consistent 60fps.</p>
-            <a href="../projects.php" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
+            <a href="../index.php#projects" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
         </div>
     </div>
 </main>

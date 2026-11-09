@@ -26,6 +26,10 @@
     padding: 0;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 html, body {
     width: 100%;
     min-height: 100%;
@@ -125,9 +129,13 @@ html, body {
 }
 
 /* --- PRIMARY HERO SHOWCASE WRAPPER -------------------------------------- */
+.section-target {
+    scroll-margin-top: 0;
+}
+
 .hero-wrapper {
     position: relative;
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     min-height: 700px;
     background-color: var(--bg-concrete);
@@ -166,6 +174,7 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-top: clamp(2.5rem, 5vh, 4rem);
     padding-left: clamp(3rem, 8.8vw, 11rem);
     padding-right: 2rem;
     z-index: 5;
@@ -1876,7 +1885,7 @@ html, body {
         z-index: 10;
     }
     .hero-right-pane {
-        width: 100vw;
+        width: 100%;
         height: 100vh;
         opacity: 0.38; /* Soft background blend on tablet */
     }
@@ -2036,7 +2045,11 @@ html, body {
         white-space: nowrap;
         text-align: center;
     }
-    .hero-wrapper {
+    .section-target {
+    scroll-margin-top: 0;
+}
+
+.hero-wrapper {
         min-height: 100vh;
         min-height: 100dvh;
         height: 100vh;
@@ -2076,7 +2089,7 @@ html, body {
         padding-top: 0.4rem;
     }
     .hero-right-pane {
-        width: 100vw;
+        width: 100%;
         height: 100%;
         position: absolute;
         top: 0;
@@ -2271,5 +2284,361 @@ html, body {
     .cursor-dot, .cursor-triangle, .cursor-triangle-wrap {
         transition: none !important;
         animation: none !important;
+    }
+}
+
+
+/* ========================================================================
+   BRUTALIST KINETIC MORPH SYSTEMS
+   ======================================================================== */
+
+.morph-text {
+    display: inline-block;
+    will-change: contents;
+    font-variant-numeric: tabular-nums;
+}
+
+/* --- HERO KINETIC MORPH WIDGET ----------------------------------------- */
+.hero-morph-widget {
+    margin-top: 1.75rem;
+    max-width: 580px;
+    background: rgba(0, 0, 0, 0.04);
+    border: 2px solid var(--color-black);
+    box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.95);
+    padding: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+    transition: transform 200ms ease, box-shadow 200ms ease;
+}
+
+.hero-morph-widget:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.95);
+}
+
+.morph-widget-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 0.6rem;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.morph-header-label {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.morph-mode-badge {
+    background: var(--color-black);
+    color: var(--color-white);
+    padding: 0.2rem 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+}
+
+.morph-widget-stage {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 1.4rem;
+    align-items: center;
+    cursor: pointer;
+}
+
+.morph-canvas {
+    width: 130px;
+    height: 130px;
+    background: #111111;
+    border: 2px solid var(--color-black);
+    overflow: visible;
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.6);
+}
+
+.morph-grid-circle {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.12);
+    stroke-width: 1;
+    stroke-dasharray: 2 4;
+}
+
+.morph-grid-axis {
+    stroke: rgba(255, 255, 255, 0.18);
+    stroke-width: 1;
+}
+
+.morph-grid-box {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.08);
+    stroke-width: 1;
+}
+
+.morph-poly-base {
+    fill: #555555;
+    stroke: #FFFFFF;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+}
+
+.morph-poly-facet.facet-a {
+    fill: #FFFFFF;
+    stroke: #000000;
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+    opacity: 0.95;
+}
+
+.morph-poly-facet.facet-b {
+    fill: #000000;
+    stroke: #FFFFFF;
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+    opacity: 0.92;
+}
+
+.morph-poly-facet.facet-c {
+    fill: #888888;
+    stroke: #000000;
+    stroke-width: 1.2;
+    stroke-linejoin: round;
+    opacity: 0.85;
+}
+
+.morph-center-dot {
+    fill: #FFFFFF;
+}
+
+.morph-widget-readout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+}
+
+.telemetry-row {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.telemetry-key {
+    font-size: 0.64rem;
+    font-weight: 800;
+    color: rgba(0, 0, 0, 0.55);
+    letter-spacing: 0.08em;
+}
+
+.telemetry-value {
+    font-weight: 800;
+    color: var(--color-black);
+    letter-spacing: -0.01em;
+}
+
+.morph-action-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+.morph-cycle-btn {
+    background: var(--color-black);
+    color: var(--color-white);
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    padding: 0.55rem 1rem;
+    border: 1px solid var(--color-black);
+    cursor: pointer;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 160ms ease, color 160ms ease;
+}
+
+.morph-cycle-btn:hover {
+    background: var(--color-white);
+    color: var(--color-black);
+}
+
+.morph-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+}
+
+.morph-pill-item {
+    background: transparent;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    color: var(--color-black);
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.morph-pill-item:hover,
+.morph-pill-item.is-active {
+    background: var(--color-black);
+    color: var(--color-white);
+    border-color: var(--color-black);
+}
+
+/* --- FLOATING ARCHITECTURAL MORPH TELEMETRY HUD ------------------------- */
+.floating-morph-hud {
+    position: fixed;
+    bottom: 2rem;
+    right: 2.2rem;
+    z-index: 95;
+    background: #000000;
+    color: #FFFFFF;
+    border: 2px solid #FFFFFF;
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.85);
+    padding: 0.65rem 0.9rem;
+    pointer-events: auto;
+    transform-origin: bottom right;
+    transition: transform 240ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 200ms ease;
+    user-select: none;
+}
+
+.floating-morph-hud:hover {
+    transform: translate(-3px, -3px) scale(1.02);
+    box-shadow: 8px 8px 0px #000000;
+}
+
+.hud-inner {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+}
+
+.hud-canvas-wrap {
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #111111;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.hud-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.hud-poly-base {
+    fill: #444444;
+    stroke: #FFFFFF;
+    stroke-width: 1.5;
+}
+
+.hud-poly-facet.hud-facet-a {
+    fill: #FFFFFF;
+    stroke: #000000;
+    stroke-width: 1.2;
+}
+
+.hud-poly-facet.hud-facet-b {
+    fill: #000000;
+    stroke: #FFFFFF;
+    stroke-width: 1.2;
+}
+
+.hud-center-dot {
+    fill: #FFFFFF;
+}
+
+.hud-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.hud-kicker {
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.hud-shape-name {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #FFFFFF;
+    line-height: 1;
+}
+
+.hud-section-name {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #C2C2C2;
+    letter-spacing: 0.04em;
+}
+
+.hud-cycle-btn {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #FFFFFF;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease, transform 150ms ease;
+}
+
+.hud-cycle-btn:hover {
+    background: #FFFFFF;
+    color: #000000;
+    transform: translateX(2px);
+}
+
+@media (max-width: 900px) {
+    .hero-morph-widget {
+        max-width: 100%;
+    }
+    .floating-morph-hud {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.5rem 0.7rem;
+    }
+    .hud-canvas-wrap {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 600px) {
+    .hero-morph-widget {
+        margin-top: 1.25rem;
+        padding: 1rem;
+    }
+    .morph-widget-stage {
+        grid-template-columns: 100px 1fr;
+        gap: 0.9rem;
+    }
+    .morph-canvas {
+        width: 100px;
+        height: 100px;
+    }
+    .floating-morph-hud {
+        display: none;
     }
 }

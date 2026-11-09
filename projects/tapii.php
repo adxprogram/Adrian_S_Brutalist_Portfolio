@@ -12,7 +12,7 @@ foreach ($projects as $idx => $p) {
         break;
     }
 }
-if (!$currentProject) { header('Location: ../projects.php'); exit; }
+if (!$currentProject) { header('Location: ../index.php#projects'); exit; }
 require_once __DIR__ . '/../includes/header.php';
 ?>
 <main class="case-study-wrapper" role="main">
@@ -30,7 +30,7 @@ require_once __DIR__ . '/../includes/header.php';
         <div class="page-placeholder-card">
             <span class="card-status">[ HARDWARE // SYSTEM ARCHITECTURE ]</span>
             <p>Edge redirect routing layer matching smart physical tags to dynamic virtual personas with instantaneous cryptographic challenge-response authentication.</p>
-            <a href="../projects.php" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
+            <a href="../index.php#projects" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
         </div>
     </div>
 </main>
