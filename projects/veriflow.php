@@ -28,7 +28,7 @@ require_once __DIR__ . '/../includes/header.php';
             <img src="../<?= htmlspecialchars($currentProject['image']) ?>" alt="<?= htmlspecialchars($currentProject['title']) ?>" class="case-study-image" />
         </div>
         <div class="page-placeholder-card">
-            <span class="card-status">[ AUDIT ENGINE // PIPELINE ARCHITECTURE ]</span>
+            <span class="card-status">AUDIT ENGINE // PIPELINE ARCHITECTURE</span>
             <p>Automated reconciliation pipeline processing discrepancy graphs in real-time with full compliance audit trails and anomaly flags.</p>
             <a href="../index.php#projects" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
         </div>

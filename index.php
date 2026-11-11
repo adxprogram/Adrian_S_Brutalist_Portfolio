@@ -22,15 +22,10 @@ require_once __DIR__ . '/includes/header.php';
         <div class="hero-grid" id="heroGrid">
             <!-- Left Pane Component: Screen-Dominant Asymmetrical Typographic Layout -->
             <div class="hero-left-pane">
-                <div class="hero-eyebrow">
-                    <span class="eyebrow-text">PORTFOLIO ARCHIVE</span>
-                    <span class="eyebrow-badge">[ ARCHITECTURAL KINETIC MORPH ]</span>
-                </div>
-
-                <!-- Giant Screen-Dominant Stacked Name with Morphing Decryption -->
+                <!-- Giant Screen-Dominant Stacked Name -->
                 <h1 class="hero-name" aria-label="Adrian Santiago">
-                    <span class="name-row name-first morph-text" data-text="ADRIAN">ADRIAN</span>
-                    <span class="name-row name-last morph-text" data-text="SANTIAGO">SANTIAGO</span>
+                    <span class="name-row name-first">ADRIAN</span>
+                    <span class="name-row name-last">SANTIAGO</span>
                 </h1>
 
                 <!-- Personal Introduction & Brutalist System Meta -->
@@ -42,7 +37,7 @@ require_once __DIR__ . '/includes/header.php';
                     <div class="hero-meta-row">
                         <div class="meta-tag">
                             <span class="tag-label">TIMEZONE</span>
-                            <span class="tag-val">UTC+8 [MANILA]</span>
+                            <span class="tag-val">UTC+8 MANILA</span>
                         </div>
                         <div class="meta-tag">
                             <span class="tag-label">STACK</span>
@@ -51,61 +46,6 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="meta-tag">
                             <span class="tag-label">FORM ENGINE</span>
                             <span class="tag-val" id="metaFormEngine">KINETIC EUCLIDEAN</span>
-                        </div>
-                    </div>
-
-                    <!-- Creative Brutalist Morph Widget: Kinetic Geometric Solid -->
-                    <div class="hero-morph-widget" id="heroMorphWidget" aria-label="Interactive Kinetic Brutalist Morph">
-                        <div class="morph-widget-header">
-                            <span class="morph-header-label">[ GEOMETRIC MONOLITH MORPH ]</span>
-                            <span class="morph-mode-badge" id="morphModeBadge">01 // TETRAHEDRON</span>
-                        </div>
-
-                        <div class="morph-widget-stage" id="morphWidgetStage" title="Hover to inspect / Click to cycle morph geometry">
-                            <svg class="morph-canvas" id="morphCanvas" viewBox="-60 -60 120 120" aria-hidden="true">
-                                <!-- Architectural Grid Reticle -->
-                                <circle cx="0" cy="0" r="48" class="morph-grid-circle"/>
-                                <line x1="-52" y1="0" x2="52" y2="0" class="morph-grid-axis"/>
-                                <line x1="0" y1="-52" x2="0" y2="52" class="morph-grid-axis"/>
-                                <rect x="-42" y="-42" width="84" height="84" class="morph-grid-box"/>
-
-                                <!-- Dynamic Morphing Multi-Facet Polygons -->
-                                <polygon class="morph-poly-base" id="morphBasePoly"/>
-                                <polygon class="morph-poly-facet facet-a" id="morphFacetA"/>
-                                <polygon class="morph-poly-facet facet-b" id="morphFacetB"/>
-                                <polygon class="morph-poly-facet facet-c" id="morphFacetC"/>
-
-                                <!-- Center Anchor Reticle -->
-                                <circle cx="0" cy="0" r="3" class="morph-center-dot"/>
-                            </svg>
-
-                            <div class="morph-widget-readout">
-                                <div class="telemetry-row">
-                                    <span class="telemetry-key">TOPOLOGY:</span>
-                                    <span class="telemetry-value" id="morphTopologyVal">SOLID PRISM</span>
-                                </div>
-                                <div class="telemetry-row">
-                                    <span class="telemetry-key">NODES:</span>
-                                    <span class="telemetry-value" id="morphVerticesVal">8 VERTICES • 3 FACETS</span>
-                                </div>
-                                <div class="telemetry-row">
-                                    <span class="telemetry-key">SECTOR SYNC:</span>
-                                    <span class="telemetry-value" id="morphScrollSyncVal">HOME [01/05]</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="morph-action-bar">
-                            <button type="button" class="morph-cycle-btn" id="morphCycleBtn" aria-label="Trigger Next Geometric Form">
-                                <span>[ CYCLE MORPH &rarr; ]</span>
-                            </button>
-                            <div class="morph-pills" id="morphPills">
-                                <button type="button" class="morph-pill-item is-active" data-shape="0" aria-label="Morph to Tetrahedron">01: TETRA</button>
-                                <button type="button" class="morph-pill-item" data-shape="1" aria-label="Morph to Aperture">02: APERTURE</button>
-                                <button type="button" class="morph-pill-item" data-shape="2" aria-label="Morph to Obelisk">03: OBELISK</button>
-                                <button type="button" class="morph-pill-item" data-shape="3" aria-label="Morph to Matrix Cube">04: MATRIX</button>
-                                <button type="button" class="morph-pill-item" data-shape="4" aria-label="Morph to Radar">05: RADAR</button>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -216,10 +156,8 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
 
                 <div class="display-card-action" aria-hidden="true">
-                    <span class="action-bracket">[</span>
                     <span class="action-text">VIEW CASE STUDY</span>
                     <span class="action-arrow">&rarr;</span>
-                    <span class="action-bracket">]</span>
                 </div>
             </a>
 
@@ -253,7 +191,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="projects-archive-container">
             <div class="archive-section" aria-label="Foundational Project Archive">
                 <div class="archive-header">
-                    <h3 class="archive-title morph-text" data-text="PREVIOUS WORKS &amp; SYSTEMS">PREVIOUS WORKS &amp; SYSTEMS</h3>
+                    <h3 class="archive-title">PREVIOUS WORKS &amp; SYSTEMS</h3>
                 </div>
 
                 <div class="archive-grid">
@@ -280,7 +218,7 @@ require_once __DIR__ . '/includes/header.php';
                                     rel="noopener noreferrer" 
                                     class="archive-link"
                                 >
-                                    [ VIEW DEPLOYMENT / REPO &rarr; ]
+                                    VIEW DEPLOYMENT / REPO &rarr;
                                 </a>
                             </div>
                         </article>
@@ -309,13 +247,11 @@ require_once __DIR__ . '/includes/header.php';
                         class="profile-image" 
                         loading="lazy"
                     />
-                    <span class="profile-frame-badge">[ WORKSPACE // ADRIAN SANTIAGO ]</span>
                 </div>
 
                 <div class="profile-bio-content">
                     <div class="profile-meta-row">
                         <span class="profile-role">CREATIVE DEVELOPER &amp; VIDEO EDITOR</span>
-                        <span class="profile-status">[ ACTIVE // MANILA ]</span>
                     </div>
 
                     <h3 class="profile-headline">Blending cinematic storytelling with functional, clean code.</h3>
@@ -348,7 +284,7 @@ require_once __DIR__ . '/includes/header.php';
             <!-- 2. Verified Credentials & Certifications -->
             <div class="sub-section" aria-label="Verified Industry Certifications">
                 <div class="sub-section-header">
-                    <h3 class="sub-section-title morph-text" data-text="VERIFIED CERTIFICATIONS">VERIFIED CERTIFICATIONS</h3>
+                    <h3 class="sub-section-title">VERIFIED CERTIFICATIONS</h3>
                 </div>
 
                 <div class="certifications-grid">
@@ -361,7 +297,6 @@ require_once __DIR__ . '/includes/header.php';
                                 class="cert-image" 
                                 loading="lazy"
                             />
-                            <span class="cert-tag">[ CODESIGNAL // DSA ]</span>
                         </div>
                         <div class="cert-info">
                             <h4 class="cert-title">CodeSignal General Coding Assessment</h4>
@@ -372,7 +307,7 @@ require_once __DIR__ . '/includes/header.php';
                                 rel="noopener noreferrer" 
                                 class="cert-action-btn"
                             >
-                                [ VERIFY CREDENTIAL &rarr; ]
+                                VERIFY CREDENTIAL &rarr;
                             </a>
                         </div>
                     </article>
@@ -386,7 +321,6 @@ require_once __DIR__ . '/includes/header.php';
                                 class="cert-image" 
                                 loading="lazy"
                             />
-                            <span class="cert-tag">[ CISCO // NETWORKING ]</span>
                         </div>
                         <div class="cert-info">
                             <h4 class="cert-title">Networking Essentials &amp; Topology Design</h4>
@@ -397,7 +331,7 @@ require_once __DIR__ . '/includes/header.php';
                                 rel="noopener noreferrer" 
                                 class="cert-action-btn"
                             >
-                                [ VERIFY ON CREDLY &rarr; ]
+                                VERIFY ON CREDLY &rarr;
                             </a>
                         </div>
                     </article>
@@ -411,7 +345,6 @@ require_once __DIR__ . '/includes/header.php';
                                 class="cert-image" 
                                 loading="lazy"
                             />
-                            <span class="cert-tag">[ ADOBE // PREMIERE PRO ]</span>
                         </div>
                         <div class="cert-info">
                             <h4 class="cert-title">Video Editing Expert // Premiere Pro</h4>
@@ -422,7 +355,7 @@ require_once __DIR__ . '/includes/header.php';
                                 rel="noopener noreferrer" 
                                 class="cert-action-btn"
                             >
-                                [ VIEW ISSUER &rarr; ]
+                                VIEW ISSUER &rarr;
                             </a>
                         </div>
                     </article>
@@ -432,7 +365,7 @@ require_once __DIR__ . '/includes/header.php';
             <!-- 3. Motion Production & Demo Reel -->
             <div class="sub-section" aria-label="Demo Reel &amp; Motion Production">
                 <div class="sub-section-header">
-                    <h3 class="sub-section-title morph-text" data-text="DEMO REEL">DEMO REEL</h3>
+                    <h3 class="sub-section-title">DEMO REEL</h3>
                 </div>
 
                 <div class="video-showcase-card">
@@ -455,12 +388,12 @@ require_once __DIR__ . '/includes/header.php';
             <!-- 4. Client Endorsements / Testimonials -->
             <div class="sub-section" aria-label="Client Endorsements">
                 <div class="sub-section-header">
-                    <h3 class="sub-section-title morph-text" data-text="CLIENT ENDORSEMENTS">CLIENT ENDORSEMENTS</h3>
+                    <h3 class="sub-section-title">CLIENT ENDORSEMENTS</h3>
                 </div>
 
                 <div class="testimonials-grid">
                     <article class="testimonial-card">
-                        <div class="testimonial-rating">[ 5.0 / 5.0 &bull; EXCELLENT ]</div>
+                        <div class="testimonial-rating" aria-label="5 out of 5 stars">✦ ✦ ✦ ✦ ✦</div>
                         <blockquote class="testimonial-quote">
                             "High quality service, Adrian is very responsive and quick to implement features."
                         </blockquote>
@@ -474,7 +407,7 @@ require_once __DIR__ . '/includes/header.php';
                     </article>
 
                     <article class="testimonial-card">
-                        <div class="testimonial-rating">[ 5.0 / 5.0 &bull; EXCELLENT ]</div>
+                        <div class="testimonial-rating" aria-label="5 out of 5 stars">✦ ✦ ✦ ✦ ✦</div>
                         <blockquote class="testimonial-quote">
                             "The video editing work is top-tier. Saved me hours of work!"
                         </blockquote>
@@ -487,11 +420,6 @@ require_once __DIR__ . '/includes/header.php';
                         </div>
                     </article>
                 </div>
-            </div>
-
-            <div class="page-footer-nav">
-                <a href="#home" class="back-btn">&larr; RETURN TO HERO</a>
-                <a href="#tools" class="back-btn">EXPLORE TOOLS &rarr;</a>
             </div>
         </div>
     </section>
@@ -509,7 +437,7 @@ require_once __DIR__ . '/includes/header.php';
             <!-- 1. Core Disciplines Grid (Using Reused Discipline Icons) -->
             <div class="sub-section" aria-label="Core Engineering Disciplines">
                 <div class="sub-section-header">
-                    <h3 class="sub-section-title morph-text" data-text="PRIMARY SPECIALIZATIONS">PRIMARY SPECIALIZATIONS</h3>
+                    <h3 class="sub-section-title">PRIMARY SPECIALIZATIONS</h3>
                 </div>
 
                 <div class="disciplines-grid">
@@ -519,7 +447,7 @@ require_once __DIR__ . '/includes/header.php';
                             <div class="discipline-icon-box" aria-hidden="true">
                                 <img src="assets/images/tools/bars.png" alt="Web Development Icon" class="discipline-icon" />
                             </div>
-                            <span class="discipline-index">[ SPEC // 01 ]</span>
+                            <span class="discipline-index">SPEC // 01</span>
                         </div>
 
                         <div class="discipline-info">
@@ -541,7 +469,7 @@ require_once __DIR__ . '/includes/header.php';
                             <div class="discipline-icon-box" aria-hidden="true">
                                 <img src="assets/images/tools/paint.png" alt="Graphic Design Icon" class="discipline-icon" />
                             </div>
-                            <span class="discipline-index">[ SPEC // 02 ]</span>
+                            <span class="discipline-index">SPEC // 02</span>
                         </div>
 
                         <div class="discipline-info">
@@ -563,7 +491,7 @@ require_once __DIR__ . '/includes/header.php';
                             <div class="discipline-icon-box" aria-hidden="true">
                                 <img src="assets/images/tools/scissor.png" alt="Video Editing Icon" class="discipline-icon" />
                             </div>
-                            <span class="discipline-index">[ SPEC // 03 ]</span>
+                            <span class="discipline-index">SPEC // 03</span>
                         </div>
 
                         <div class="discipline-info">
@@ -581,83 +509,174 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
 
-            <!-- 2. Technical Arsenal Matrix -->
-            <div class="sub-section" aria-label="Technical Toolchain Matrix">
+            <!-- 2. Applications Section (Interactive Horizontal Timeline) -->
+            <div class="sub-section applications-section" aria-label="Applications Timeline">
                 <div class="sub-section-header">
-                    <h3 class="sub-section-title morph-text" data-text="TECHNICAL ECOSYSTEM">TECHNICAL ECOSYSTEM</h3>
+                    <h3 class="sub-section-title">Applications</h3>
                 </div>
 
-                <div class="toolchain-matrix">
-                    <!-- Group 1: Frontend & UI -->
-                    <div class="toolchain-card">
-                        <div class="toolchain-card-header">
-                            <h4 class="toolchain-title">FRONTEND &amp; INTERACTIVE</h4>
-                            <span class="toolchain-code">[ CLIENT-SIDE ]</span>
+                <div class="applications-scroll-container" id="applicationsScrollContainer" tabindex="0" role="region" aria-label="Applications timeline horizontal scroll">
+                    <div class="applications-track" id="applicationsTrack">
+                        <!-- Horizontal Axis Line with Arrowhead -->
+                        <div class="applications-axis" aria-hidden="true">
+                            <div class="applications-arrow"></div>
                         </div>
-                        <div class="tags-wrap">
-                            <span class="brutalist-tag">JavaScript (ES6+)</span>
-                            <span class="brutalist-tag">Three.js / WebGL</span>
-                            <span class="brutalist-tag">CSS3 Grid / Flexbox</span>
-                            <span class="brutalist-tag">Custom Properties</span>
-                            <span class="brutalist-tag">HTML5 Canvas</span>
-                            <span class="brutalist-tag">requestAnimationFrame</span>
-                            <span class="brutalist-tag">SVG Architecture</span>
-                        </div>
-                    </div>
 
-                    <!-- Group 2: Backend & Database -->
-                    <div class="toolchain-card">
-                        <div class="toolchain-card-header">
-                            <h4 class="toolchain-title">BACKEND &amp; ARCHITECTURE</h4>
-                            <span class="toolchain-code">[ SERVER-SIDE ]</span>
-                        </div>
-                        <div class="tags-wrap">
-                            <span class="brutalist-tag">PHP 8.2+</span>
-                            <span class="brutalist-tag">Apache 2.4</span>
-                            <span class="brutalist-tag">MySQL / MariaDB</span>
-                            <span class="brutalist-tag">REST API Integration</span>
-                            <span class="brutalist-tag">Formspree Endpoints</span>
-                            <span class="brutalist-tag">Git / GitHub VCS</span>
-                        </div>
-                    </div>
+                        <!-- 1. Adobe After Effects -->
+                        <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Adobe After Effects">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/after-effects.png" alt="Adobe After Effects" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">After Effects</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
 
-                    <!-- Group 3: Systems, DSA & Networking -->
-                    <div class="toolchain-card">
-                        <div class="toolchain-card-header">
-                            <h4 class="toolchain-title">ALGORITHMS &amp; SYSTEMS</h4>
-                            <span class="toolchain-code">[ COMPUTATION ]</span>
-                        </div>
-                        <div class="tags-wrap">
-                            <span class="brutalist-tag">Java SE</span>
-                            <span class="brutalist-tag">Data Structures &amp; Algorithms</span>
-                            <span class="brutalist-tag">CodeSignal Certified</span>
-                            <span class="brutalist-tag">Cisco Packet Tracer</span>
-                            <span class="brutalist-tag">VLAN &amp; IP Subnetting</span>
-                            <span class="brutalist-tag">Routing &amp; Switching</span>
-                        </div>
-                    </div>
+                        <!-- 2. Google Antigravity -->
+                        <a href="https://antigravity.google/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Google Antigravity">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/antigravity.webp" alt="Google Antigravity" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Antigravity</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
 
-                    <!-- Group 4: Creative & Production Suite -->
-                    <div class="toolchain-card">
-                        <div class="toolchain-card-header">
-                            <h4 class="toolchain-title">CREATIVE &amp; POST-PRODUCTION</h4>
-                            <span class="toolchain-code">[ MULTIMEDIA ]</span>
-                        </div>
-                        <div class="tags-wrap">
-                            <span class="brutalist-tag">Adobe Premiere Pro</span>
-                            <span class="brutalist-tag">Adobe After Effects</span>
-                            <span class="brutalist-tag">Figma</span>
-                            <span class="brutalist-tag">Canva Pro</span>
-                            <span class="brutalist-tag">Color Grading / LUTs</span>
-                            <span class="brutalist-tag">Sound Design</span>
-                        </div>
+                        <!-- 3. CapCut -->
+                        <a href="https://www.capcut.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="CapCut">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/capcut.png" alt="CapCut" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">CapCut</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 4. ChatGPT -->
+                        <a href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="ChatGPT">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/chatgpt.webp" alt="ChatGPT" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">ChatGPT</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 5. Claude -->
+                        <a href="https://claude.ai/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Claude">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/claude-ai.webp" alt="Claude" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Claude</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 6. Figma -->
+                        <a href="https://www.figma.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Figma">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/figma.webp" alt="Figma" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Figma</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 7. Microsoft Edge -->
+                        <a href="https://www.microsoft.com/edge" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Microsoft Edge">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/monday.svg" alt="Microsoft Edge" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Microsoft Edge</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 8. n8n -->
+                        <a href="https://n8n.io/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="n8n">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/n8n.webp" alt="n8n" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">n8n</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 9. Notion -->
+                        <a href="https://www.notion.so/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Notion">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/notion.webp" alt="Notion" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Notion</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 10. Obsidian -->
+                        <a href="https://obsidian.md/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Obsidian">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/obsidian.webp" alt="Obsidian" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Obsidian</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 11. Adobe Premiere Pro -->
+                        <a href="https://www.adobe.com/products/premiere.html" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Adobe Premiere Pro">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/premiere-pro.webp" alt="Adobe Premiere Pro" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Premiere Pro</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 12. Slack -->
+                        <a href="https://slack.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Slack">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/slack.webp" alt="Slack" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Slack</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 13. Spotify -->
+                        <a href="https://open.spotify.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Spotify">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/spotify.webp" alt="Spotify" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">Spotify</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
+
+                        <!-- 14. Visual Studio Code -->
+                        <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Visual Studio Code">
+                            <div class="app-icon-wrap">
+                                <img src="assets/images/tools-logo/vscode.png" alt="Visual Studio Code" class="app-logo" loading="lazy" />
+                            </div>
+                            <span class="app-name">VSCode</span>
+                            <div class="app-node" aria-hidden="true">
+                                <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
+                            </div>
+                        </a>
                     </div>
                 </div>
-            </div>
-
-            <div class="page-footer-nav">
-                <a href="#experience" class="back-btn">&larr; VIEW EXPERIENCE RECORD</a>
-                <a href="#contact" class="back-btn">INITIATE CONTACT &rarr;</a>
             </div>
         </div>
     </section>
@@ -678,17 +697,17 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Channels Card -->
                     <article class="contact-channels-card">
                         <div class="contact-channel-item">
-                            <span class="channel-label">[ EMAIL ]</span>
+                            <span class="channel-label">EMAIL</span>
                             <a href="mailto:adriandc.santantiago22@email.com" class="channel-val">adriandc.santantiago22@email.com</a>
                         </div>
 
                         <div class="contact-channel-item">
-                            <span class="channel-label">[ PHONE / WHATSAPP ]</span>
+                            <span class="channel-label">PHONE / WHATSAPP</span>
                             <a href="https://wa.me/639765764144" target="_blank" rel="noopener noreferrer" class="channel-val">(+63) 976 576 4144</a>
                         </div>
 
                         <div class="contact-channel-item">
-                            <span class="channel-label">[ LOCATION ]</span>
+                            <span class="channel-label">LOCATION</span>
                             <span class="channel-val" style="font-size: 1.1rem;">MANILA, PHILIPPINES &bull; UTC+8</span>
                         </div>
 
@@ -720,7 +739,7 @@ require_once __DIR__ . '/includes/header.php';
                     <article class="dossier-card" aria-label="Adrian Santiago Technical Resume">
                         <div class="dossier-header">
                             <h3 class="dossier-title">RESUME</h3>
-                            <span class="dossier-code">[ PDF ]</span>
+                            <span class="dossier-code">PDF</span>
                         </div>
 
                         <div class="dossier-preview-frame">
@@ -730,7 +749,7 @@ require_once __DIR__ . '/includes/header.php';
                                 class="dossier-img" 
                                 loading="lazy"
                             />
-                            <span class="dossier-overlay-badge">[ ADRIAN_SANTIAGO_RESUME.PDF ]</span>
+                            <span class="dossier-overlay-badge">ADRIAN_SANTIAGO_RESUME.PDF</span>
                         </div>
 
                         <div class="dossier-actions">
@@ -740,7 +759,7 @@ require_once __DIR__ . '/includes/header.php';
                                 rel="noopener noreferrer" 
                                 class="dossier-btn"
                             >
-                                <span>[ DOWNLOAD RESUME (PDF) &darr; ]</span>
+                                <span>DOWNLOAD RESUME (PDF) &darr;</span>
                             </a>
                         </div>
                     </article>
@@ -756,18 +775,18 @@ require_once __DIR__ . '/includes/header.php';
                         <form id="contactForm" action="https://formspree.io/f/mrerpjoo" method="POST" class="contact-form">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="firstName" class="form-label">FIRST NAME [REQ]</label>
+                                    <label for="firstName" class="form-label">FIRST NAME *</label>
                                     <input type="text" id="firstName" name="first-name" class="form-input" placeholder="e.g. Marc" required>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="lastName" class="form-label">LAST NAME [REQ]</label>
+                                    <label for="lastName" class="form-label">LAST NAME *</label>
                                     <input type="text" id="lastName" name="last-name" class="form-input" placeholder="e.g. Miller" required>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="contactEmail" class="form-label">EMAIL ADDRESS [REQ]</label>
+                                <label for="contactEmail" class="form-label">EMAIL ADDRESS *</label>
                                 <input type="email" id="contactEmail" name="email" class="form-input" placeholder="name@email.com" required>
                             </div>
 
@@ -777,12 +796,12 @@ require_once __DIR__ . '/includes/header.php';
                             </div>
 
                             <div class="form-group">
-                                <label for="messageBody" class="form-label">MESSAGE [REQ]</label>
+                                <label for="messageBody" class="form-label">MESSAGE *</label>
                                 <textarea id="messageBody" name="message" class="form-textarea" placeholder="Tell me about your project or inquiry..." required></textarea>
                             </div>
 
                             <button type="submit" id="contactSubmitBtn" class="submit-btn">
-                                [ SEND MESSAGE &rarr; ]
+                                SEND MESSAGE &rarr;
                             </button>
 
                             <div id="contactFormStatus" class="form-status" role="status" aria-live="polite"></div>
@@ -791,8 +810,7 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
 
-            <div class="page-footer-nav">
-                <a href="#home" class="back-btn">&larr; RETURN TO HERO</a>
+            <div class="page-footer-nav" style="justify-content: flex-end;">
                 <a href="#home" class="back-btn" id="backToTopBtn">
                     <img src="assets/images/social/up-arrows.png" alt="Up Arrow" style="width: 14px; height: 14px; filter: brightness(0) invert(1);" />
                     <span>TOP OF PAGE</span>
@@ -801,27 +819,5 @@ require_once __DIR__ . '/includes/header.php';
         </div>
     </section>
 </main>
-
-<!-- Floating Architectural Morph Telemetry HUD (Synchronized with Section Geometry) -->
-<aside class="floating-morph-hud" id="floatingMorphHud" aria-label="Brutalist Morph HUD Compass">
-    <div class="hud-inner">
-        <div class="hud-canvas-wrap" id="hudCanvasWrap" title="Click to morph form / jump to sector">
-            <svg class="hud-svg" id="hudMorphSvg" viewBox="-60 -60 120 120" aria-hidden="true">
-                <polygon class="hud-poly-base" id="hudPolyBase"/>
-                <polygon class="hud-poly-facet hud-facet-a" id="hudFacetA"/>
-                <polygon class="hud-poly-facet hud-facet-b" id="hudFacetB"/>
-                <circle cx="0" cy="0" r="2" class="hud-center-dot"/>
-            </svg>
-        </div>
-        <div class="hud-info">
-            <span class="hud-kicker">[ GEOM // TELEMETRY ]</span>
-            <span class="hud-shape-name" id="hudShapeName">01 // TETRA</span>
-            <span class="hud-section-name" id="hudSectionName">ZONE: HOME</span>
-        </div>
-        <button type="button" class="hud-cycle-btn" id="hudCycleBtn" title="Cycle geometric form">
-            <span class="hud-arrow">&rarr;</span>
-        </button>
-    </div>
-</aside>
 
 <?php require_once __DIR__ . '/includes/footer.php'; ?>

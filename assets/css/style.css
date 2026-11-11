@@ -765,11 +765,14 @@ html, body {
 }
 
 .testimonial-rating {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.1em;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 900;
+    letter-spacing: 0.35rem;
     color: var(--color-black);
+    display: inline-flex;
+    align-items: center;
+    line-height: 1;
 }
 
 .testimonial-quote {
@@ -921,74 +924,151 @@ html, body {
     line-height: 1.5;
 }
 
-/* --- TOOLCHAIN & ARSENAL MATRIX (tools.php) ----------------------------- */
-.toolchain-matrix {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.75rem;
+/* --- APPLICATIONS HORIZONTAL TIMELINE ---------------- */
+.applications-section {
+    position: relative;
+    width: 100%;
 }
 
-.toolchain-card {
-    border: 2px solid var(--color-black);
-    background: rgba(255, 255, 255, 0.6);
-    padding: 2rem;
+.applications-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    cursor: grab;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 1rem 0 1.5rem 0;
+}
+
+.applications-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
+.applications-scroll-container.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+}
+
+.applications-track {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: max-content;
+    padding: 2.5rem 6rem 3rem 3rem;
+    gap: 4.5rem;
+}
+
+/* Continuous horizontal timeline axis line */
+.applications-axis {
+    position: absolute;
+    left: 1.25rem;
+    right: 2rem;
+    bottom: calc(3rem + 13px);
+    height: 2px;
+    background: var(--color-black);
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Directional arrowhead at the right end of the axis */
+.applications-arrow {
+    position: absolute;
+    right: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0;
+    height: 0;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+    border-left: 10px solid var(--color-black);
+}
+
+/* Individual application item */
+.app-item {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
-}
-
-.toolchain-card-header {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid var(--color-black);
-    padding-bottom: 0.75rem;
+    justify-content: flex-end;
+    width: 110px;
+    flex-shrink: 0;
+    text-decoration: none;
+    color: var(--color-black);
+    cursor: pointer;
+    user-select: none;
+    gap: 0.85rem;
+    transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.toolchain-title {
+.app-item:hover {
+    transform: translateY(-4px);
+}
+
+.app-item:hover .app-logo {
+    transform: scale(1.08);
+}
+
+.app-item:hover .app-name {
+    text-decoration: underline;
+}
+
+.app-icon-wrap {
+    height: 64px;
+    width: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.app-logo {
+    max-height: 54px;
+    max-width: 54px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: grayscale(100%) contrast(110%);
+    transition: transform 200ms ease, filter 200ms ease;
+    display: block;
+}
+
+.app-name {
     font-family: var(--font-heading);
-    font-size: 1.15rem;
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--color-black);
+    text-align: center;
+    white-space: nowrap;
     letter-spacing: -0.01em;
+    line-height: 1.2;
 }
 
-.toolchain-code {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.78rem;
-    font-weight: 800;
-    color: rgba(0, 0, 0, 0.6);
-}
-
-.toolchain-desc {
-    font-size: 0.92rem;
-    line-height: 1.5;
-    color: rgba(0, 0, 0, 0.8);
-}
-
-.tags-wrap {
+/* Star node container sitting directly on the axis */
+.app-node {
+    width: 28px;
+    height: 28px;
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding-top: 0.5rem;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    margin-top: 0.35rem;
 }
 
-.brutalist-tag {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.8rem;
-    font-weight: 800;
-    padding: 0.4rem 0.75rem;
-    background: var(--color-black);
-    color: var(--color-white);
-    letter-spacing: 0.04em;
-    border: 1px solid var(--color-black);
-    transition: background 200ms ease, color 200ms ease;
-    user-select: none;
-}
-
-.brutalist-tag:hover {
-    background: var(--color-white);
+.app-star {
+    width: 22px;
+    height: 22px;
     color: var(--color-black);
+    display: block;
+    transition: transform 200ms ease;
+}
+
+.app-item:hover .app-star {
+    transform: scale(1.18);
 }
 
 /* --- INITIATE CONTACT & DOSSIER (contact.php) --------------------------- */
@@ -1471,6 +1551,10 @@ html, body {
     padding-top: 2rem;
     border-top: 2px solid var(--color-black);
     margin-top: 2rem;
+}
+
+#contact .page-footer-nav {
+    justify-content: flex-end;
 }
 
 .back-btn {
@@ -2012,11 +2096,15 @@ html, body {
         gap: 1.5rem;
     }
 
-    .toolchain-matrix,
     .testimonials-grid,
     .contact-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+    }
+
+    .applications-track {
+        gap: 3.5rem;
+        padding: 2rem 4rem 2.75rem 2rem;
     }
 
     .form-row {
@@ -2640,5 +2728,12 @@ html, body {
     }
     .floating-morph-hud {
         display: none;
+    }
+    .applications-track {
+        gap: 2.75rem;
+        padding: 1.5rem 3rem 2.5rem 1.25rem;
+    }
+    .applications-axis {
+        bottom: calc(2.5rem + 13px);
     }
 }

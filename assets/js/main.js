@@ -122,7 +122,7 @@
             if (target.closest('.project-display-card, .accordion-slice, .archive-card, .video-frame, .profile-image-wrap, .cert-image-frame, .dossier-preview-frame, .morph-canvas, .hud-canvas-wrap')) {
                 setCursorTargetShape('VIEWFINDER');
                 customCursor.classList.add('is-hovering');
-            } else if (target.closest('a, button, .nav-link, .back-btn, .projects-cta-pill, .submit-btn, [role="button"], .morph-pill-item')) {
+            } else if (target.closest('a, button, .nav-link, .back-btn, .projects-cta-pill, .submit-btn, [role="button"], .morph-pill-item, .brutalist-tag, .app-item')) {
                 setCursorTargetShape('DIAMOND');
                 customCursor.classList.add('is-hovering');
             } else if (target.closest('h1, h2, h3, h4, .hero-name, .hero-description, .profile-headline, blockquote, input, textarea')) {
@@ -1087,7 +1087,7 @@
 
         contactForm.addEventListener('submit', async function (e) {
             e.preventDefault();
-            submitBtn.textContent = '[ SENDING... ]';
+            submitBtn.textContent = 'SENDING...';
             submitBtn.style.opacity = '0.7';
             statusBox.textContent = '';
             statusBox.className = 'form-status';
@@ -1102,26 +1102,125 @@
                 });
 
                 if (response.ok) {
-                    submitBtn.textContent = '[ SENT • SUCCESS ]';
+                    submitBtn.textContent = 'SENT • SUCCESS';
                     submitBtn.style.background = '#FFFFFF';
                     submitBtn.style.color = '#000000';
                     submitBtn.style.opacity = '1';
-                    statusBox.textContent = '[ Thanks! Your message has been sent. ]';
+                    statusBox.textContent = 'Thanks! Your message has been sent.';
                     statusBox.classList.add('success');
                     contactForm.reset();
                 } else {
-                    submitBtn.textContent = '[ FAILED TO SEND ]';
+                    submitBtn.textContent = 'FAILED TO SEND';
                     submitBtn.style.opacity = '1';
-                    statusBox.textContent = '[ Oops! There was a problem sending your message. ]';
+                    statusBox.textContent = 'Oops! There was a problem sending your message.';
                     statusBox.classList.add('error');
                 }
             } catch (err) {
-                submitBtn.textContent = '[ TRY AGAIN ]';
+                submitBtn.textContent = 'TRY AGAIN';
                 submitBtn.style.opacity = '1';
-                statusBox.textContent = '[ Error: Could not connect to the server. ]';
+                statusBox.textContent = 'Error: Could not connect to the server.';
                 statusBox.classList.add('error');
             }
         });
+    }
+
+    /* ========================================================================
+       8. APPLICATIONS HORIZONTAL WHEEL PAN & DRAG CONTROLLER
+       ======================================================================== */
+    function initApplicationsScroll() {
+        const container = document.getElementById('applicationsScrollContainer');
+        if (!container) return;
+
+        let targetScroll = container.scrollLeft;
+        let isAnimating = false;
+
+        function animateScroll() {
+            const current = container.scrollLeft;
+            const diff = targetScroll - current;
+            if (Math.abs(diff) > 0.8) {
+                container.scrollLeft = current + diff * 0.22;
+                requestAnimationFrame(animateScroll);
+            } else {
+                container.scrollLeft = targetScroll;
+                isAnimating = false;
+            }
+        }
+
+        // Horizontal mouse wheel panning:
+        // Scrolling down (deltaY > 0) pans cards left to right.
+        // Scrolling up (deltaY < 0) pans cards right to left.
+        // At edges, allows standard vertical page scroll to continue seamlessly.
+        container.addEventListener('wheel', (e) => {
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            if (maxScroll <= 0) return;
+
+            const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+            const movingRight = delta > 0;
+            const movingLeft = delta < 0;
+
+            const atRight = container.scrollLeft >= maxScroll - 4;
+            const atLeft = container.scrollLeft <= 4;
+
+            if ((movingRight && !atRight) || (movingLeft && !atLeft)) {
+                e.preventDefault();
+                targetScroll = Math.max(0, Math.min(maxScroll, targetScroll + delta * 1.5));
+                if (!isAnimating) {
+                    isAnimating = true;
+                    requestAnimationFrame(animateScroll);
+                }
+            }
+        }, { passive: false });
+
+        // Update targetScroll on manual scroll / touch / momentum
+        container.addEventListener('scroll', () => {
+            if (!isAnimating) {
+                targetScroll = container.scrollLeft;
+            }
+        }, { passive: true });
+
+        // Drag-to-pan support with distance threshold so clicks still open external links cleanly
+        let isDown = false;
+        let startX = 0;
+        let scrollStart = 0;
+        let draggedDistance = 0;
+
+        container.addEventListener('mousedown', (e) => {
+            if (e.button !== 0) return;
+            isDown = true;
+            draggedDistance = 0;
+            container.classList.add('is-dragging');
+            startX = e.pageX - container.offsetLeft;
+            scrollStart = container.scrollLeft;
+        });
+
+        window.addEventListener('mouseup', () => {
+            if (isDown) {
+                isDown = false;
+                container.classList.remove('is-dragging');
+                targetScroll = container.scrollLeft;
+            }
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            const x = e.pageX - container.offsetLeft;
+            const moveDelta = x - startX;
+            draggedDistance += Math.abs(moveDelta);
+            if (draggedDistance > 5) {
+                e.preventDefault();
+                const walk = moveDelta * 1.5;
+                container.scrollLeft = scrollStart - walk;
+                targetScroll = container.scrollLeft;
+            }
+        });
+
+        // Prevent accidental link navigation when user drags the timeline
+        container.addEventListener('click', (e) => {
+            if (draggedDistance > 5) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }, true);
     }
 
     /* ========================================================================
@@ -1135,6 +1234,7 @@
         initKineticMorphEngine();
         initSmoothScrollAndNavSpy();
         initTextScrambleMorph();
+        initApplicationsScroll();
         initContactForm();
     }
 

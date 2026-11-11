@@ -28,7 +28,7 @@ require_once __DIR__ . '/../includes/header.php';
             <img src="../<?= htmlspecialchars($currentProject['image']) ?>" alt="<?= htmlspecialchars($currentProject['title']) ?>" class="case-study-image" />
         </div>
         <div class="page-placeholder-card">
-            <span class="card-status">[ ARCHITECTURE PROFILE // <?= htmlspecialchars($currentProject['title']) ?> ]</span>
+            <span class="card-status">ARCHITECTURE PROFILE // <?= htmlspecialchars($currentProject['title']) ?></span>
             <p>Engineered with custom dimension configuration pipelines, real-time pricing calculation logic, and an optimized relational schema supporting multi-tenant inventory tracking.</p>
             <a href="../index.php#projects" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
         </div>

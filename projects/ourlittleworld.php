@@ -28,7 +28,7 @@ require_once __DIR__ . '/../includes/header.php';
             <img src="../<?= htmlspecialchars($currentProject['image']) ?>" alt="<?= htmlspecialchars($currentProject['title']) ?>" class="case-study-image" />
         </div>
         <div class="page-placeholder-card">
-            <span class="card-status">[ SYSTEM ARCHITECTURE // <?= htmlspecialchars($currentProject['title']) ?> ]</span>
+            <span class="card-status">SYSTEM ARCHITECTURE // <?= htmlspecialchars($currentProject['title']) ?></span>
             <p>Interactive HTML5 Canvas engine running custom AABB collision physics, ambient audio synthesizer, and pixel-perfect sprite rendering with dynamic weather shaders.</p>
             <a href="../index.php#projects" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
         </div>

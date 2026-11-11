@@ -28,7 +28,7 @@ require_once __DIR__ . '/../includes/header.php';
             <img src="../<?= htmlspecialchars($currentProject['image']) ?>" alt="<?= htmlspecialchars($currentProject['title']) ?>" class="case-study-image" />
         </div>
         <div class="page-placeholder-card">
-            <span class="card-status">[ SYSTEM ARCHITECTURE // <?= htmlspecialchars($currentProject['title']) ?> ]</span>
+            <span class="card-status">SYSTEM ARCHITECTURE // <?= htmlspecialchars($currentProject['title']) ?></span>
             <p>Minimalist editorial showcase combining variable typography, fluid layout grids, and performance-tuned micro-interactions running at consistent 60fps.</p>
             <a href="../index.php#projects" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
         </div>

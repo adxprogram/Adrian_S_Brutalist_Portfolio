@@ -28,7 +28,7 @@ require_once __DIR__ . '/../includes/header.php';
             <img src="../<?= htmlspecialchars($currentProject['image']) ?>" alt="<?= htmlspecialchars($currentProject['title']) ?>" class="case-study-image" />
         </div>
         <div class="page-placeholder-card">
-            <span class="card-status">[ HARDWARE // SYSTEM ARCHITECTURE ]</span>
+            <span class="card-status">HARDWARE // SYSTEM ARCHITECTURE</span>
             <p>Edge redirect routing layer matching smart physical tags to dynamic virtual personas with instantaneous cryptographic challenge-response authentication.</p>
             <a href="../index.php#projects" class="back-btn">&larr; RETURN TO PROJECTS ARCHIVE</a>
         </div>
