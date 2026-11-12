@@ -1414,8 +1414,7 @@
             }
         }
 
-        let previousScrollY = window.scrollY;
-        if (window.innerWidth <= 900 && previousScrollY > 100) {
+        if (window.innerWidth <= 900 && window.scrollY > 100) {
             siteHeader.classList.add('is-scroll-hidden');
         }
 
@@ -1423,14 +1422,12 @@
             const currentScrollY = Math.max(0, window.scrollY);
 
             if (window.innerWidth <= 900) {
-                if (currentScrollY <= 100 || currentScrollY < previousScrollY) {
+                if (currentScrollY <= 100) {
                     siteHeader.classList.remove('is-scroll-hidden');
-                } else if (currentScrollY > previousScrollY) {
+                } else {
                     siteHeader.classList.add('is-scroll-hidden');
                 }
             }
-
-            previousScrollY = currentScrollY;
         }, { passive: true });
 
         navToggle.addEventListener('click', (e) => {
@@ -1460,6 +1457,8 @@
                 siteHeader.classList.remove('is-scroll-hidden');
             } else if (window.scrollY > 100) {
                 siteHeader.classList.add('is-scroll-hidden');
+            } else {
+                siteHeader.classList.remove('is-scroll-hidden');
             }
 
             if (window.innerWidth > 900 && mobileNavOverlay.classList.contains('is-active')) {
