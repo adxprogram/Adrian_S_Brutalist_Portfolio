@@ -1,0 +1,15 @@
+# Environment & Local Secrets
+config.php
+.env
+.env.*
+*.env
+config.example.php
+
+# Local Cache & Temp Data
+data/cache/
+data/cache/*
+
+# Reference Folder (Victor Eke reference)
+victoreke.com-main/
+victoreke.com-main/*
+

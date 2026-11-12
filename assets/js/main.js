@@ -963,11 +963,17 @@
             const scrollPos = window.scrollY + (window.innerHeight * 0.38);
 
             let sIdx = 0;
-            if ((window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 70)) {
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (window.scrollY < 40) {
+                sIdx = 0; // top of the page is always home
+            } else if (maxScroll > 0 && window.scrollY >= maxScroll - 70) {
                 sIdx = sections.length - 1;
             } else {
                 for (let i = 0; i < sections.length; i++) {
-                    if (scrollPos >= sections[i].offsetTop) {
+                    // getBoundingClientRect, not offsetTop: a GSAP pin-spacer around
+                    // #tools would make its offsetTop 0 and hijack the active state
+                    const top = sections[i].getBoundingClientRect().top + window.scrollY;
+                    if (scrollPos >= top) {
                         sIdx = i;
                     }
                 }
@@ -1060,25 +1066,47 @@
         });
 
         let scrollSpyScheduled = false;
+        let lastSyncedId = null;
+
+        // Live document position of a section. NOT offsetTop: the #tools section is
+        // pinned by GSAP inside a positioned pin-spacer, which makes its offsetTop 0
+        // and would mark "tools" active from the very top of the page.
+        const sectionTop = (el) => el.getBoundingClientRect().top + window.scrollY;
+
+        function getCurrentSectionId() {
+            const y = window.scrollY;
+
+            // Top of the page is ALWAYS home
+            if (y < 40) return sections[0].id;
+
+            // Bottom of the page is the last section (only when the page can really scroll)
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            if (maxScroll > 0 && y >= maxScroll - 70) return sections[sections.length - 1].id;
+
+            const probe = y + window.innerHeight * 0.38;
+            let currentId = sections[0].id;
+            for (let i = 0; i < sections.length; i++) {
+                if (probe >= sectionTop(sections[i])) currentId = sections[i].id;
+            }
+            return currentId;
+        }
+
+        // Keep the URL hash in step with where the visitor actually is, so a stale
+        // "#tools" can't yank a reload/back-navigation away from home.
+        function syncHash(id) {
+            if (id === lastSyncedId || !window.history || !window.history.replaceState) return;
+            lastSyncedId = id;
+            const clean = window.location.pathname + window.location.search;
+            try {
+                window.history.replaceState(null, '', id === sections[0].id ? clean : clean + '#' + id);
+            } catch (_) { /* file:// or sandboxed */ }
+        }
 
         function handleScrollSpy() {
             if (isManualScrolling || sections.length === 0) return;
-
-            const scrollPosition = window.scrollY + (window.innerHeight * 0.38);
-            let currentId = sections[0].id;
-
-            if ((window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 70)) {
-                currentId = sections[sections.length - 1].id;
-            } else {
-                for (let i = 0; i < sections.length; i++) {
-                    const section = sections[i];
-                    if (scrollPosition >= section.offsetTop) {
-                        currentId = section.id;
-                    }
-                }
-            }
-
+            const currentId = getCurrentSectionId();
             setActiveNav(currentId);
+            syncHash(currentId);
         }
 
         window.addEventListener('scroll', () => {

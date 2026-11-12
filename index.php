@@ -232,6 +232,11 @@ require_once __DIR__ . '/includes/header.php';
     </section>
 
     <!-- ========================================================================
+         SECTION: GITHUB CONTRIBUTIONS & ACTIVITY (Brutalist Telemetry)
+         ======================================================================== -->
+    <?php require_once __DIR__ . '/includes/github-contributions.php'; ?>
+
+    <!-- ========================================================================
          SECTION 3: EXPERIENCE (Bio + Verified Credentials + Demo Reel + Reviews)
          ======================================================================== -->
     <section class="page-wrapper section-target" id="experience" role="region" aria-label="Experience &amp; Record">

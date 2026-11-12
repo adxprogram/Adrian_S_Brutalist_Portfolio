@@ -1,0 +1,448 @@
+/**
+ * Brutalist GitHub Activity & Contribution Graph Styles
+ * Adrian Santiago Portfolio // 2026 Archive
+ *
+ * Aesthetics: High-contrast monochrome, sharp 0px radius, 1px-2px solid black borders,
+ * Space Grotesk / Space Mono typography, and seamless responsive layout.
+ */
+
+/* --- SECTION & CONTAINER ------------------------------------------------ */
+.github-section {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    background-color: var(--bg-concrete, #8C8C8C);
+}
+
+.github-archive-section {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: none;
+    margin-bottom: 3.5rem;
+}
+
+.github-archive-section .archive-header {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+}
+
+.brutalist-inline-link {
+    color: var(--color-black, #000000);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: background-color 150ms ease, color 150ms ease;
+    padding: 0 2px;
+}
+
+.brutalist-inline-link:hover {
+    background-color: var(--color-black, #000000);
+    color: var(--color-white, #FFFFFF);
+}
+
+/* --- 2-COLUMN SPLIT LAYOUT ---------------------------------------------- */
+.github-contributions-layout {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    width: 100%;
+}
+
+/* --- MAIN DISPLAY CARD -------------------------------------------------- */
+.github-display-card {
+    flex: 1;
+    min-width: 0;
+    border: 2px solid var(--color-black, #000000);
+    background: rgba(255, 255, 255, 0.65);
+    border-radius: 0;
+    padding: clamp(1.2rem, 2vw, 1.8rem);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 0 var(--color-black, #000000);
+    position: relative;
+    box-sizing: border-box;
+    transition: box-shadow 250ms ease, transform 250ms ease;
+}
+
+.github-display-card:hover {
+    box-shadow: 0 12px 0 var(--color-black, #000000);
+}
+
+/* --- CARD HEADER -------------------------------------------------------- */
+.github-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+}
+
+.github-header-stats {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.github-stat-number {
+    font-family: 'Space Grotesk', var(--font-heading, sans-serif);
+    font-size: clamp(2.5rem, 4.5vw, 4rem);
+    font-weight: 700;
+    line-height: 0.95;
+    color: var(--color-black, #000000);
+    letter-spacing: -0.03em;
+}
+
+.github-stat-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.github-stat-label {
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: rgba(0, 0, 0, 0.65);
+    text-transform: uppercase;
+}
+
+.github-stat-year {
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--color-black, #000000);
+    text-transform: uppercase;
+}
+
+
+
+/* --- GRAPH CANVAS & HORIZONTAL SCROLL WRAPPER ---------------------------- */
+.github-graph-scroll-wrap {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    padding: 1.25rem 0.25rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.18);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+    background: rgba(255, 255, 255, 0.35);
+    box-sizing: border-box;
+    scrollbar-width: thin;
+    scrollbar-color: #000000 rgba(0, 0, 0, 0.08);
+}
+
+.github-graph-scroll-wrap::-webkit-scrollbar {
+    height: 6px;
+}
+
+.github-graph-scroll-wrap::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.06);
+    border-radius: 0;
+}
+
+.github-graph-scroll-wrap::-webkit-scrollbar-thumb {
+    background: var(--color-black, #000000);
+    border-radius: 0;
+}
+
+.github-graph-inner {
+    width: 100%;
+    min-width: 840px;
+    display: flex;
+    justify-content: center;
+    transition: opacity 200ms ease;
+}
+
+.github-graph-inner.is-updating {
+    opacity: 0.4;
+}
+
+/* --- SVG GRAPH CALENDAR ------------------------------------------------- */
+.github-calendar-svg {
+    display: block;
+    width: 100%;
+    max-width: 860px;
+    height: auto;
+    user-select: none;
+    overflow: visible;
+}
+
+.graph-month-text {
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    fill: rgba(0, 0, 0, 0.7);
+    text-anchor: start;
+}
+
+.graph-day-text {
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    fill: rgba(0, 0, 0, 0.55);
+    text-anchor: start;
+}
+
+/* Square Cells */
+.contrib-cell {
+    rx: 0;
+    ry: 0;
+    shape-rendering: crispEdges;
+    cursor: pointer;
+    transition: fill 180ms ease, stroke 120ms ease, stroke-width 120ms ease;
+}
+
+.contrib-cell:hover,
+.contrib-cell:focus {
+    stroke: #000000 !important;
+    stroke-width: 1.5px !important;
+    outline: none;
+}
+
+/* Brutalist High-Contrast Monochrome Fill Scale */
+.contrib-lvl-0 {
+    fill: #E2E2E2;
+    stroke: rgba(0, 0, 0, 0.1);
+    stroke-width: 0.5px;
+}
+
+.contrib-lvl-1 {
+    fill: #A3A3A3;
+    stroke: rgba(0, 0, 0, 0.25);
+    stroke-width: 0.5px;
+}
+
+.contrib-lvl-2 {
+    fill: #6E6E6E;
+    stroke: #555555;
+    stroke-width: 0.5px;
+}
+
+.contrib-lvl-3 {
+    fill: #363636;
+    stroke: #222222;
+    stroke-width: 0.5px;
+}
+
+.contrib-lvl-4 {
+    fill: #000000;
+    stroke: #000000;
+    stroke-width: 0.5px;
+}
+
+/* --- CARD FOOTER & LEGEND ------------------------------------------------ */
+.github-card-footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 1rem;
+    gap: 1rem;
+}
+
+/* Legend */
+.github-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: rgba(0, 0, 0, 0.7);
+    user-select: none;
+}
+
+.legend-cells {
+    display: inline-flex;
+    gap: 3px;
+    align-items: center;
+    margin: 0 0.35rem;
+}
+
+.legend-cell {
+    width: 11px;
+    height: 11px;
+    border-radius: 0;
+    display: inline-block;
+}
+
+.legend-cell.lvl-0 {
+    background: #E2E2E2;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.legend-cell.lvl-1 {
+    background: #A3A3A3;
+}
+
+.legend-cell.lvl-2 {
+    background: #6E6E6E;
+}
+
+.legend-cell.lvl-3 {
+    background: #363636;
+}
+
+.legend-cell.lvl-4 {
+    background: #000000;
+}
+
+/* --- YEAR SELECTOR SIDEBAR ---------------------------------------------- */
+.github-years-sidebar {
+    width: 125px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.years-button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.brutalist-year-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.65);
+    border: 2px solid var(--color-black, #000000);
+    border-radius: 0;
+    color: var(--color-black, #000000);
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: transform 180ms ease, background-color 180ms ease, color 180ms ease, box-shadow 180ms ease;
+    user-select: none;
+    box-shadow: 0 4px 0 rgba(0, 0, 0, 0.15);
+}
+
+.brutalist-year-btn:hover {
+    background: var(--color-white, #FFFFFF);
+    color: var(--color-black, #000000);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 var(--color-black, #000000);
+}
+
+.brutalist-year-btn.is-active {
+    background: var(--color-black, #000000);
+    color: var(--color-white, #FFFFFF);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.35);
+}
+
+.brutalist-year-btn .btn-year-num {
+    font-weight: 800;
+}
+
+/* --- BRUTALIST FLOATING TOOLTIP ----------------------------------------- */
+.github-tooltip {
+    position: fixed;
+    z-index: 999999;
+    pointer-events: none;
+    background: #000000;
+    color: #FFFFFF;
+    border: 1px solid #111111;
+    border-radius: 0;
+    padding: 0.5rem 0.85rem;
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.74rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.6);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate(-50%, -100%) translateY(-10px);
+    transition: opacity 120ms ease, transform 120ms ease;
+    white-space: nowrap;
+}
+
+.github-tooltip.is-active {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -100%) translateY(-6px);
+}
+
+.github-tooltip .tooltip-count {
+    color: #FFFFFF;
+    font-weight: 800;
+}
+
+.github-tooltip .tooltip-date {
+    color: #A3A3A3;
+    margin-left: 0.3rem;
+}
+
+/* --- RESPONSIVE MEDIA QUERIES (Mobile Rules) ---------------------------- */
+@media (max-width: 1024px) {
+    .github-contributions-layout {
+        flex-direction: column;
+        gap: 1.25rem;
+    }
+
+    .github-years-sidebar {
+        width: 100%;
+    }
+
+    .years-button-group {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .brutalist-year-btn {
+        flex: 1 1 calc(33.333% - 0.5rem);
+        min-width: 80px;
+        justify-content: center;
+        padding: 0.65rem 0.75rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .github-archive-section {
+        margin-top: 1.5rem;
+        padding-top: 2rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .github-display-card {
+        padding: 1.15rem 0.9rem;
+    }
+
+    .github-card-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+    }
+
+    .github-header-actions {
+        width: auto;
+    }
+
+    .github-stat-number {
+        font-size: 2.2rem;
+    }
+
+    .github-card-footer {
+        justify-content: flex-end;
+        padding-top: 0.75rem;
+    }
+
+    .brutalist-year-btn {
+        flex: 1 1 calc(33.333% - 0.5rem);
+    }
+}

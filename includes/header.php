@@ -27,13 +27,15 @@ $isHome = ($currentPage === 'home');
     <link rel="preload" as="image" href="<?= $basePath ?>assets/images/Man_looking_down_left_3.png">
     <link rel="preload" as="image" href="<?= $basePath ?>assets/images/Man_looking_downward_left_4.png">
 
-    <!-- Google Fonts: Syncopate (Headings) & Inter (Body & Nav) -->
+    <!-- Google Fonts: Syncopate, Space Grotesk, Space Mono, & Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
 
     <!-- Core Stylesheet -->
     <link rel="stylesheet" href="<?= $basePath ?>assets/css/style.css">
+    <!-- GitHub Contribution Graph Stylesheet -->
+    <link rel="stylesheet" href="<?= $basePath ?>assets/css/github-contributions.css">
 </head>
 <body>
     <!-- Custom Inverted Brutalist Cursor Component (Continuous Polygon Vertex Morph) -->

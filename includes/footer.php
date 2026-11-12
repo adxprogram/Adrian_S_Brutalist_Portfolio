@@ -1,5 +1,6 @@
     <!-- Semantic Brutalist Footer -->
     <footer class="site-footer">
+        <div class="hero-grain-overlay" aria-hidden="true"></div>
         <p class="copyright">Copyright &copy; Adrian Santiago 2026 All rights Reserved</p>
     </footer>
 
@@ -15,5 +16,7 @@
 
     <!-- Core Interaction Script -->
     <script src="<?= $basePath ?? '' ?>assets/js/main.js"></script>
+    <!-- GitHub Contributions Component Script -->
+    <script src="<?= $basePath ?? '' ?>assets/js/github-contributions.js"></script>
 </body>
 </html>
