@@ -50,9 +50,9 @@ $isHome = ($currentPage === 'home');
 
     <!-- Top Navigation (Anchors with Smooth Scroll & Hanging Brutalist Tabs) -->
     <header class="site-header" id="siteHeader">
-        <!-- Brutalist Mobile Hamburger Button (Strictly <= 900px) -->
+        <!-- Brutalist Mobile Menu Button (Strictly <= 900px) -->
         <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="mobileNavOverlay">
-            <span class="nav-toggle-icon" id="navToggleIcon" aria-hidden="true">☰</span>
+            <span class="nav-toggle-label" aria-hidden="true">menu</span>
         </button>
 
         <!-- Desktop Navigation Tabs (Strictly > 900px) -->

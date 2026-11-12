@@ -1358,16 +1358,39 @@
        ======================================================================== */
     function initMobileNav() {
         const navToggle = document.getElementById('navToggle');
-        const navToggleIcon = document.getElementById('navToggleIcon');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
         const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
         if (!navToggle || !mobileNavOverlay) return;
 
+        const mainScript = Array.from(document.scripts).find(script => script.src.includes('assets/js/main.js'));
+        const sounds = {
+            menu: { file: 'gta-menu-sound.mp3', audio: null },
+            nav: { file: 'gta-menu-nav-sound.mp3', audio: null }
+        };
+
+        function playNavigationSound(sound) {
+            if (!sound.audio) {
+                const url = mainScript
+                    ? new URL(`../audio/${sound.file}`, mainScript.src).href
+                    : `assets/audio/${sound.file}`;
+                sound.audio = new Audio(url);
+            }
+
+            sound.audio.currentTime = 0;
+            const playback = sound.audio.play();
+            if (playback !== undefined) {
+                playback.catch(error => {
+                    if (error.name !== 'AbortError') {
+                        console.error('Unable to play the mobile navigation sound.', error);
+                    }
+                });
+            }
+        }
+
         function openMenu() {
             navToggle.classList.add('is-open');
             navToggle.setAttribute('aria-expanded', 'true');
-            if (navToggleIcon) navToggleIcon.textContent = '✕';
             mobileNavOverlay.classList.add('is-active');
             mobileNavOverlay.setAttribute('aria-hidden', 'false');
             document.body.classList.add('mobile-nav-open');
@@ -1376,7 +1399,6 @@
         function closeMenu() {
             navToggle.classList.remove('is-open');
             navToggle.setAttribute('aria-expanded', 'false');
-            if (navToggleIcon) navToggleIcon.textContent = '☰';
             mobileNavOverlay.classList.remove('is-active');
             mobileNavOverlay.setAttribute('aria-hidden', 'true');
             document.body.classList.remove('mobile-nav-open');
@@ -1393,12 +1415,14 @@
 
         navToggle.addEventListener('click', (e) => {
             e.stopPropagation();
+            playNavigationSound(sounds.menu);
             toggleMenu();
         });
 
         // Close menu when any mobile link is tapped
         mobileNavLinks.forEach(link => {
             link.addEventListener('click', () => {
+                playNavigationSound(sounds.nav);
                 closeMenu();
             });
         });
