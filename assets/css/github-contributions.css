@@ -389,7 +389,12 @@
 @media (max-width: 1024px) {
     .github-contributions-layout {
         flex-direction: column;
+        align-items: stretch;
         gap: 1.25rem;
+    }
+
+    .github-display-card {
+        width: 100%;
     }
 
     .github-years-sidebar {
@@ -413,12 +418,19 @@
 @media (max-width: 640px) {
     .github-archive-section {
         margin-top: 1.5rem;
-        padding-top: 2rem;
+        padding-top: 1.5rem;
         margin-bottom: 2.5rem;
     }
 
+    .github-contributions-layout,
+    .github-display-card,
+    .github-graph-scroll-wrap {
+        min-width: 0;
+        max-width: 100%;
+    }
+
     .github-display-card {
-        padding: 1.15rem 0.9rem;
+        padding: 1rem 0.85rem;
     }
 
     .github-card-header {
@@ -434,7 +446,11 @@
     }
 
     .github-stat-number {
-        font-size: 2.2rem;
+        font-size: 2rem;
+    }
+
+    .github-graph-scroll-wrap {
+        padding: 1rem 0.25rem;
     }
 
     .github-card-footer {

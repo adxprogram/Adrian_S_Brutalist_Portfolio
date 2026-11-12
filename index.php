@@ -81,6 +81,16 @@ require_once __DIR__ . '/includes/header.php';
                         <img src="assets/images/top.gif" alt="Spinning Cat Easter Egg" class="top-gif-img" />
                     </div>
 
+                    <button
+                        type="button"
+                        class="portrait-cat-button"
+                        id="portraitCatButton"
+                        aria-label="Toggle cat animation"
+                        aria-pressed="false"
+                    >
+                        <span aria-hidden="true">🐈‍⬛</span>
+                    </button>
+
                     <!-- Layer 2: Eyes Looking Directly Left -->
                     <img 
                         src="assets/images/Man_looking_to_left_2.png" 

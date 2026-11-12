@@ -407,6 +407,10 @@ body::before {
     filter: grayscale(100%);
 }
 
+.portrait-cat-button {
+    display: none;
+}
+
 /* --- SECONDARY PAGES (Clean sharp solid blocks as per moodboard) -------- */
 .page-wrapper {
     position: relative;
@@ -3182,9 +3186,7 @@ span.app-name {
         font-size: 0.82rem;
     }
 
-    /* --- Portrait: no box, anchored to the bottom, full-bleed on phones ---
-           The photo is a tight head-and-shoulders cut-out, so we anchor it to
-           its bottom edge (50% 100%) and let the shoulders run off the hero. */
+    /* --- Portrait: centered below the intro, with the head and shirt in frame. */
     .hero-right-pane {
         --portrait-ratio: 1 / 1.15;     /* width / height of the visible area */
         --portrait-pos: 50% 100%;       /* lower y% = more headroom shown      */
@@ -3307,6 +3309,188 @@ html::before {
     .page-container {
         padding-left: 1rem;
         padding-right: 1rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .applications-runway,
+    .applications-sticky-stage,
+    .applications-scroll-container {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .case-study-wrapper {
+        padding: 5.5rem 1.5rem 3rem;
+    }
+
+    .case-study-wrapper .page-title {
+        margin-top: 0;
+        font-size: clamp(1.7rem, 7vw, 2.8rem);
+        line-height: 1.05;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .case-study-hero {
+        margin-bottom: 1.5rem;
+    }
+
+    .case-study-image-frame {
+        max-height: none;
+        margin: 1.25rem 0;
+    }
+
+    .case-study-image {
+        height: auto;
+        max-height: 70vh;
+        object-fit: contain;
+    }
+
+    .page-placeholder-card {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    body::before {
+        animation: none;
+    }
+
+    .hero-right-pane {
+        --portrait-ratio: 7 / 10;
+        --portrait-pos: 50% 0%;
+        margin: 1rem auto 0;
+    }
+
+    .applications-runway {
+        overflow: visible;
+    }
+
+    .applications-scroll-container {
+        overflow: visible !important;
+    }
+
+    .applications-track {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        width: 100% !important;
+        gap: 1rem 0.5rem;
+        padding: 1rem 0 0;
+        transform: none !important;
+    }
+
+    .applications-axis,
+    .app-node {
+        display: none;
+    }
+
+    .app-item {
+        width: auto;
+        min-width: 0;
+        gap: 0.45rem;
+    }
+
+    .app-icon-wrap {
+        width: 100%;
+        height: 3rem;
+    }
+
+    .app-logo {
+        max-width: 2.5rem;
+        max-height: 2.5rem;
+    }
+
+    .app-name,
+    span.app-name {
+        font-size: 0.68rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .case-study-wrapper {
+        padding: 4.8rem 1rem 2.5rem;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .app-item:hover {
+        transform: none;
+    }
+
+    .app-item:hover .app-logo {
+        transform: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .hero-right-pane {
+        --portrait-pos: 50% 25%;
+    }
+
+    .portrait-cat-button {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        z-index: 12;
+        display: grid !important;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: 2px solid var(--color-white);
+        background: var(--color-black);
+        color: var(--color-white);
+        box-shadow: 0 3px 0 var(--color-black);
+        font-size: 1.45rem;
+        line-height: 1;
+        cursor: pointer;
+        pointer-events: auto;
+        transition: transform 160ms ease, background-color 160ms ease, color 160ms ease;
+    }
+
+    .portrait-cat-button span {
+        filter: grayscale(1) brightness(0) invert(1);
+    }
+
+    .portrait-cat-button[aria-pressed="true"] {
+        border-color: var(--color-black);
+        background: var(--color-white);
+        color: var(--color-black);
+    }
+
+    .portrait-cat-button[aria-pressed="true"] span {
+        filter: grayscale(1);
+    }
+
+    .portrait-cat-button:active {
+        transform: translateY(2px);
+        box-shadow: 0 1px 0 var(--color-black);
+    }
+
+    .hero-right-pane .portrait-top-gif {
+        top: 50%;
+        left: 50%;
+        width: min(82%, 300px);
+    }
+
+    .hero-right-pane .portrait-top-gif.is-active {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .hero-right-pane .portrait-top-gif.is-active .top-gif-img {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .hero-right-pane.is-cat-active .portrait-layer.layer-0 {
+        opacity: 0 !important;
+        visibility: hidden !important;
     }
 }
 

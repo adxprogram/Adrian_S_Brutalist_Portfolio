@@ -249,8 +249,8 @@
         }
     }
 
-    function playHappySong() {
-        if (window.innerWidth <= 900 || isTouchDevice) return;
+    function playHappySong(forcePlayback = false) {
+        if (!forcePlayback && (window.innerWidth <= 900 || isTouchDevice)) return;
         try {
             if (!happySongAudio) {
                 happySongAudio = new Audio('assets/audio/happy-happy-happy-song.mp3');
@@ -259,18 +259,26 @@
             happySongAudio.currentTime = 0;
             const p = happySongAudio.play();
             if (p !== undefined) {
-                p.catch(() => {});
+                p.catch(error => {
+                    if (forcePlayback && error.name !== 'AbortError') {
+                        console.error('Unable to play the cat audio.', error);
+                    }
+                });
             }
-        } catch (err) {}
+        } catch (error) {
+            if (forcePlayback) console.error('Unable to play the cat audio.', error);
+        }
     }
 
-    function stopHappySong() {
-        if (window.innerWidth <= 900 || isTouchDevice) return;
+    function stopHappySong(forcePlayback = false) {
+        if (!forcePlayback && (window.innerWidth <= 900 || isTouchDevice)) return;
         if (happySongAudio) {
             try {
                 happySongAudio.pause();
                 happySongAudio.currentTime = 0;
-            } catch (err) {}
+            } catch (error) {
+                if (forcePlayback) console.error('Unable to stop the cat audio.', error);
+            }
         }
     }
 
@@ -605,6 +613,27 @@
                 };
             }
         };
+    }
+
+    function initPortraitCatButton() {
+        const catButton = document.getElementById('portraitCatButton');
+        const portraitPane = document.getElementById('portraitPane');
+        portraitTopGif = document.getElementById('portraitTopGif');
+
+        if (!catButton || !portraitPane || !portraitTopGif) return;
+
+        catButton.addEventListener('click', () => {
+            const showCat = !portraitTopGif.classList.contains('is-active');
+            portraitTopGif.classList.toggle('is-active', showCat);
+            portraitPane.classList.toggle('is-cat-active', showCat);
+            catButton.setAttribute('aria-pressed', String(showCat));
+
+            if (showCat) {
+                playHappySong(true);
+            } else {
+                stopHappySong(true);
+            }
+        });
     }
 
     /* ========================================================================
@@ -1396,6 +1425,7 @@
         checkDeviceCapabilities();
         initCustomCursor();
         initEyeTracker();
+        initPortraitCatButton();
         initProjectAccordion();
         initKineticMorphEngine();
         initSmoothScrollAndNavSpy();
