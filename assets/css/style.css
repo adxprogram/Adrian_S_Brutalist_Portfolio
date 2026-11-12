@@ -347,7 +347,8 @@ body::before {
     user-select: none;
     opacity: 0;
     visibility: hidden;
-    transform: translateZ(0);
+    transform: translateZ(0) scale(1.04);
+    transform-origin: right center;
     will-change: opacity;
     transition: opacity var(--transition-gaze), visibility 0s var(--transition-gaze);
 }
@@ -3438,6 +3439,18 @@ html::before {
         padding: 0;
         justify-content: center;
         background: var(--color-black);
+        pointer-events: auto;
+        transition: opacity 220ms ease;
+    }
+
+    .site-header.is-scroll-hidden {
+        opacity: 0 !important;
+        pointer-events: none;
+    }
+
+    .site-header.is-scroll-hidden .nav-toggle,
+    .site-header.is-scroll-hidden .mobile-nav-overlay {
+        pointer-events: none !important;
     }
 
     .nav-toggle,
@@ -3527,6 +3540,12 @@ html::before {
     .hero-right-pane.is-cat-active .portrait-layer.layer-0 {
         opacity: 0 !important;
         visibility: hidden !important;
+    }
+
+    .hero-right-pane .portrait-layer.layer-0,
+    .hero-right-pane .portrait-layer.is-base {
+        left: -4% !important;
+        width: 104% !important;
     }
 }
 

@@ -1357,11 +1357,12 @@
        8B. BRUTALIST MOBILE NAVIGATION CONTROLLER (Strictly <= 900px)
        ======================================================================== */
     function initMobileNav() {
+        const siteHeader = document.getElementById('siteHeader');
         const navToggle = document.getElementById('navToggle');
         const mobileNavOverlay = document.getElementById('mobileNavOverlay');
         const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
 
-        if (!navToggle || !mobileNavOverlay) return;
+        if (!siteHeader || !navToggle || !mobileNavOverlay) return;
 
         const mainScript = Array.from(document.scripts).find(script => script.src.includes('assets/js/main.js'));
         const sounds = {
@@ -1413,6 +1414,25 @@
             }
         }
 
+        let previousScrollY = window.scrollY;
+        if (window.innerWidth <= 900 && previousScrollY > 100) {
+            siteHeader.classList.add('is-scroll-hidden');
+        }
+
+        window.addEventListener('scroll', () => {
+            const currentScrollY = Math.max(0, window.scrollY);
+
+            if (window.innerWidth <= 900) {
+                if (currentScrollY <= 100 || currentScrollY < previousScrollY) {
+                    siteHeader.classList.remove('is-scroll-hidden');
+                } else if (currentScrollY > previousScrollY) {
+                    siteHeader.classList.add('is-scroll-hidden');
+                }
+            }
+
+            previousScrollY = currentScrollY;
+        }, { passive: true });
+
         navToggle.addEventListener('click', (e) => {
             e.stopPropagation();
             playNavigationSound(sounds.menu);
@@ -1436,6 +1456,12 @@
 
         // Close if resized to desktop (> 900px)
         window.addEventListener('resize', () => {
+            if (window.innerWidth > 900) {
+                siteHeader.classList.remove('is-scroll-hidden');
+            } else if (window.scrollY > 100) {
+                siteHeader.classList.add('is-scroll-hidden');
+            }
+
             if (window.innerWidth > 900 && mobileNavOverlay.classList.contains('is-active')) {
                 closeMenu();
             }
