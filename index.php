@@ -43,10 +43,10 @@ require_once __DIR__ . '/includes/header.php';
                             <span class="tag-label">STACK</span>
                             <span class="tag-val">PHP • JS • CSS • MOTION</span>
                         </div>
-                        <div class="meta-tag">
+                        <!-- <div class="meta-tag">
                             <span class="tag-label">FORM ENGINE</span>
                             <span class="tag-val" id="metaFormEngine">KINETIC EUCLIDEAN</span>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -122,6 +122,9 @@ require_once __DIR__ . '/includes/header.php';
          SECTION 2: PROJECTS (Interactive Split Stage + Archive)
          ======================================================================== -->
     <section class="projects-page-wrapper section-target" id="projects" role="region" aria-label="Selected Projects Showcase">
+        <!-- Texture Overlay: High-contrast monochrome screen grain like home -->
+        <div class="hero-grain-overlay" aria-hidden="true"></div>
+
         <!-- 1. Top Header & Title Bar (Constrained) -->
         <div class="projects-header-container">
             <header class="projects-header">
@@ -232,6 +235,9 @@ require_once __DIR__ . '/includes/header.php';
          SECTION 3: EXPERIENCE (Bio + Verified Credentials + Demo Reel + Reviews)
          ======================================================================== -->
     <section class="page-wrapper section-target" id="experience" role="region" aria-label="Experience &amp; Record">
+        <!-- Texture Overlay: High-contrast monochrome screen grain like home -->
+        <div class="hero-grain-overlay" aria-hidden="true"></div>
+
         <div class="page-container">
             <!-- Page Header -->
             <div class="page-header">
@@ -282,144 +288,126 @@ require_once __DIR__ . '/includes/header.php';
             </article>
 
             <!-- 2. Verified Credentials & Certifications -->
-            <div class="sub-section" aria-label="Verified Industry Certifications">
-                <div class="sub-section-header">
-                    <h3 class="sub-section-title">VERIFIED CERTIFICATIONS</h3>
-                </div>
+            <div class="certifications-grid" aria-label="Verified Industry Certifications">
+                <!-- Cert 1: CodeSignal -->
+                <article class="cert-card">
+                    <div class="cert-image-frame">
+                        <img 
+                            src="assets/images/certifications/CodeSignal_Cert.png" 
+                            alt="CodeSignal General Coding Assessment Certification" 
+                            class="cert-image" 
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="cert-info">
+                        <h4 class="cert-title">CodeSignal General Coding Assessment</h4>
+                        <p class="cert-desc">Achieved top-tier score demonstrating advanced algorithmic problem solving, computational complexity analysis, and data structure manipulation.</p>
+                        <a 
+                            href="https://codesignal.com/learn/profile/cmkqy6p360004k304m5n9ylts" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            class="cert-action-btn"
+                        >
+                            VERIFY CREDENTIAL &rarr;
+                        </a>
+                    </div>
+                </article>
 
-                <div class="certifications-grid">
-                    <!-- Cert 1: CodeSignal -->
-                    <article class="cert-card">
-                        <div class="cert-image-frame">
-                            <img 
-                                src="assets/images/certifications/CodeSignal_Cert.png" 
-                                alt="CodeSignal General Coding Assessment Certification" 
-                                class="cert-image" 
-                                loading="lazy"
-                            />
-                        </div>
-                        <div class="cert-info">
-                            <h4 class="cert-title">CodeSignal General Coding Assessment</h4>
-                            <p class="cert-desc">Achieved top-tier score demonstrating advanced algorithmic problem solving, computational complexity analysis, and data structure manipulation.</p>
-                            <a 
-                                href="https://codesignal.com/learn/profile/cmkqy6p360004k304m5n9ylts" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="cert-action-btn"
-                            >
-                                VERIFY CREDENTIAL &rarr;
-                            </a>
-                        </div>
-                    </article>
+                <!-- Cert 2: Cisco Packet Tracer -->
+                <article class="cert-card">
+                    <div class="cert-image-frame">
+                        <img 
+                            src="assets/images/certifications/Packet_Tracer_Cert.png" 
+                            alt="Cisco Packet Tracer Networking Essentials Certification" 
+                            class="cert-image" 
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="cert-info">
+                        <h4 class="cert-title">Networking Essentials &amp; Topology Design</h4>
+                        <p class="cert-desc">Certified in enterprise topology configuration using Cisco Packet Tracer, including VLAN segmentation, subnetting, and router routing tables.</p>
+                        <a 
+                            href="https://www.credly.com/badges/9bbe28de-691f-4a62-980e-a7e7d68b1083" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            class="cert-action-btn"
+                        >
+                            VERIFY ON CREDLY &rarr;
+                        </a>
+                    </div>
+                </article>
 
-                    <!-- Cert 2: Cisco Packet Tracer -->
-                    <article class="cert-card">
-                        <div class="cert-image-frame">
-                            <img 
-                                src="assets/images/certifications/Packet_Tracer_Cert.png" 
-                                alt="Cisco Packet Tracer Networking Essentials Certification" 
-                                class="cert-image" 
-                                loading="lazy"
-                            />
-                        </div>
-                        <div class="cert-info">
-                            <h4 class="cert-title">Networking Essentials &amp; Topology Design</h4>
-                            <p class="cert-desc">Certified in enterprise topology configuration using Cisco Packet Tracer, including VLAN segmentation, subnetting, and router routing tables.</p>
-                            <a 
-                                href="https://www.credly.com/badges/9bbe28de-691f-4a62-980e-a7e7d68b1083" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="cert-action-btn"
-                            >
-                                VERIFY ON CREDLY &rarr;
-                            </a>
-                        </div>
-                    </article>
-
-                    <!-- Cert 3: Adobe Premiere Pro -->
-                    <article class="cert-card">
-                        <div class="cert-image-frame">
-                            <img 
-                                src="assets/images/certifications/Premiere_Pro_Cert.png" 
-                                alt="Adobe Premiere Pro Video Editing Expert Certification" 
-                                class="cert-image" 
-                                loading="lazy"
-                            />
-                        </div>
-                        <div class="cert-info">
-                            <h4 class="cert-title">Video Editing Expert // Premiere Pro</h4>
-                            <p class="cert-desc">Certified in Adobe Premiere Pro advanced editing workflows, pacing, multi-track audio staging, color grading, and cinematic storytelling.</p>
-                            <a 
-                                href="https://www.facebook.com/GraphicsmediatrainingPH" 
-                                target="_blank" 
-                                rel="noopener noreferrer" 
-                                class="cert-action-btn"
-                            >
-                                VIEW ISSUER &rarr;
-                            </a>
-                        </div>
-                    </article>
-                </div>
+                <!-- Cert 3: Adobe Premiere Pro -->
+                <article class="cert-card">
+                    <div class="cert-image-frame">
+                        <img 
+                            src="assets/images/certifications/Premiere_Pro_Cert.png" 
+                            alt="Adobe Premiere Pro Video Editing Expert Certification" 
+                            class="cert-image" 
+                            loading="lazy"
+                        />
+                    </div>
+                    <div class="cert-info">
+                        <h4 class="cert-title">Video Editing Expert // Premiere Pro</h4>
+                        <p class="cert-desc">Certified in Adobe Premiere Pro advanced editing workflows, pacing, multi-track audio staging, color grading, and cinematic storytelling.</p>
+                        <a 
+                            href="https://www.facebook.com/GraphicsmediatrainingPH" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            class="cert-action-btn"
+                        >
+                            VIEW ISSUER &rarr;
+                        </a>
+                    </div>
+                </article>
             </div>
 
             <!-- 3. Motion Production & Demo Reel -->
-            <div class="sub-section" aria-label="Demo Reel &amp; Motion Production">
-                <div class="sub-section-header">
-                    <h3 class="sub-section-title">DEMO REEL</h3>
-                </div>
-
-                <div class="video-showcase-card">
-                    <div class="video-frame">
-                        <video 
-                            controls 
-                            loop 
-                            playsinline 
-                            preload="metadata" 
-                            class="brutalist-video"
-                            poster="assets/images/demo-reel/demo-reel-thumbnail.jpg"
-                        >
-                            <source src="https://media.githubusercontent.com/media/adxprogram/Eydi_Portfolio_Website/main/images/Demo_Reel_Adrian.mp4" type="video/mp4">
-                            Your browser does not support HTML5 video streaming.
-                        </video>
-                    </div>
+            <div class="video-showcase-card" aria-label="Demo Reel &amp; Motion Production">
+                <div class="video-frame">
+                    <video 
+                        controls 
+                        loop 
+                        playsinline 
+                        preload="metadata" 
+                        class="brutalist-video"
+                        poster="assets/images/demo-reel/demo-reel-thumbnail.jpg"
+                    >
+                        <source src="https://media.githubusercontent.com/media/adxprogram/Eydi_Portfolio_Website/main/images/Demo_Reel_Adrian.mp4" type="video/mp4">
+                        Your browser does not support HTML5 video streaming.
+                    </video>
                 </div>
             </div>
 
             <!-- 4. Client Endorsements / Testimonials -->
-            <div class="sub-section" aria-label="Client Endorsements">
-                <div class="sub-section-header">
-                    <h3 class="sub-section-title">CLIENT ENDORSEMENTS</h3>
-                </div>
-
-                <div class="testimonials-grid">
-                    <article class="testimonial-card">
-                        <div class="testimonial-rating" aria-label="5 out of 5 stars">✦ ✦ ✦ ✦ ✦</div>
-                        <blockquote class="testimonial-quote">
-                            "High quality service, Adrian is very responsive and quick to implement features."
-                        </blockquote>
-                        <div class="testimonial-author">
-                            <span class="author-mark">SP</span>
-                            <div class="author-meta">
-                                <span class="author-name">SP</span>
-                                <span class="author-status">Verified Reviewer</span>
-                            </div>
+            <div class="testimonials-grid" aria-label="Client Endorsements">
+                <article class="testimonial-card">
+                    <div class="testimonial-rating" aria-label="4 out of 5 stars"><span class="rating-star">✦</span><span class="rating-star">✦</span><span class="rating-star">✦</span><span class="rating-star">✦</span></div>
+                    <blockquote class="testimonial-quote">
+                        "High quality service, Adrian is very responsive and quick to implement features."
+                    </blockquote>
+                    <div class="testimonial-author">
+                        <span class="author-mark">SP</span>
+                        <div class="author-meta">
+                            <span class="author-name">SP</span>
+                            <span class="author-status">Verified Reviewer</span>
                         </div>
-                    </article>
+                    </div>
+                </article>
 
-                    <article class="testimonial-card">
-                        <div class="testimonial-rating" aria-label="5 out of 5 stars">✦ ✦ ✦ ✦ ✦</div>
-                        <blockquote class="testimonial-quote">
-                            "The video editing work is top-tier. Saved me hours of work!"
-                        </blockquote>
-                        <div class="testimonial-author">
-                            <span class="author-mark">M</span>
-                            <div class="author-meta">
-                                <span class="author-name">MARC</span>
-                                <span class="author-status">Verified Reviewer // Content Creator</span>
-                            </div>
+                <article class="testimonial-card">
+                    <div class="testimonial-rating" aria-label="4 out of 5 stars"><span class="rating-star">✦</span><span class="rating-star">✦</span><span class="rating-star">✦</span><span class="rating-star">✦</span></div>
+                    <blockquote class="testimonial-quote">
+                        "The video editing work is top-tier. Saved me hours of work!"
+                    </blockquote>
+                    <div class="testimonial-author">
+                        <span class="author-mark">M</span>
+                        <div class="author-meta">
+                            <span class="author-name">MARC</span>
+                            <span class="author-status">Verified Reviewer // Content Creator</span>
                         </div>
-                    </article>
-                </div>
+                    </div>
+                </article>
             </div>
         </div>
     </section>
@@ -428,6 +416,9 @@ require_once __DIR__ . '/includes/header.php';
          SECTION 4: TOOLS (Primary Specializations + Technical Ecosystem)
          ======================================================================== -->
     <section class="page-wrapper section-target" id="tools" role="region" aria-label="Arsenal &amp; Tools">
+        <!-- Texture Overlay: High-contrast monochrome screen grain like home -->
+        <div class="hero-grain-overlay" aria-hidden="true"></div>
+
         <div class="page-container">
             <!-- Page Header -->
             <div class="page-header">
@@ -435,99 +426,94 @@ require_once __DIR__ . '/includes/header.php';
             </div>
 
             <!-- 1. Core Disciplines Grid (Using Reused Discipline Icons) -->
-            <div class="sub-section" aria-label="Core Engineering Disciplines">
-                <div class="sub-section-header">
-                    <h3 class="sub-section-title">PRIMARY SPECIALIZATIONS</h3>
-                </div>
-
-                <div class="disciplines-grid">
-                    <!-- Discipline 1: Web Development -->
-                    <article class="discipline-card">
-                        <div class="discipline-top">
-                            <div class="discipline-icon-box" aria-hidden="true">
-                                <img src="assets/images/tools/bars.png" alt="Web Development Icon" class="discipline-icon" />
-                            </div>
-                            <span class="discipline-index">SPEC // 01</span>
+            <div class="disciplines-grid" aria-label="Core Engineering Disciplines">
+                <!-- Discipline 1: Web Development -->
+                <article class="discipline-card">
+                    <div class="discipline-top">
+                        <div class="discipline-icon-box" aria-hidden="true">
+                            <img src="assets/images/tools/bars.png" alt="Web Development Icon" class="discipline-icon" />
                         </div>
+                        <span class="discipline-index">SPEC // 01</span>
+                    </div>
 
-                        <div class="discipline-info">
-                            <span class="discipline-sub">SYSTEMS &amp; INTERFACES</span>
-                            <h4 class="discipline-title">Web Development</h4>
-                            <p class="discipline-desc">
-                                Websites built to work across all devices with fast performance, clean semantic layouts, and responsive interaction models.
-                            </p>
-                        </div>
+                    <div class="discipline-info">
+                        <span class="discipline-sub">SYSTEMS &amp; INTERFACES</span>
+                        <h4 class="discipline-title">Web Development</h4>
+                        <p class="discipline-desc">
+                            Websites built to work across all devices with fast performance, clean semantic layouts, and responsive interaction models.
+                        </p>
+                    </div>
 
-                        <div class="discipline-stack">
-                            STACK: PHP 8.2 &bull; ES6+ JS &bull; Three.js &bull; CSS3 System &bull; MySQL
-                        </div>
-                    </article>
+                    <div class="discipline-stack">
+                        STACK: PHP 8.2 &bull; ES6+ JS &bull; Three.js &bull; CSS3 System &bull; MySQL
+                    </div>
+                </article>
 
-                    <!-- Discipline 2: Graphic Design -->
-                    <article class="discipline-card">
-                        <div class="discipline-top">
-                            <div class="discipline-icon-box" aria-hidden="true">
-                                <img src="assets/images/tools/paint.png" alt="Graphic Design Icon" class="discipline-icon" />
-                            </div>
-                            <span class="discipline-index">SPEC // 02</span>
+                <!-- Discipline 2: Graphic Design -->
+                <article class="discipline-card">
+                    <div class="discipline-top">
+                        <div class="discipline-icon-box" aria-hidden="true">
+                            <img src="assets/images/tools/paint.png" alt="Graphic Design Icon" class="discipline-icon" />
                         </div>
+                        <span class="discipline-index">SPEC // 02</span>
+                    </div>
 
-                        <div class="discipline-info">
-                            <span class="discipline-sub">IDENTITY &amp; VISUAL LOGIC</span>
-                            <h4 class="discipline-title">Graphic Design</h4>
-                            <p class="discipline-desc">
-                                Visually striking designs balancing creativity and functionality. Typography systems, branding, and assets crafted for digital platforms.
-                            </p>
-                        </div>
+                    <div class="discipline-info">
+                        <span class="discipline-sub">IDENTITY &amp; VISUAL LOGIC</span>
+                        <h4 class="discipline-title">Graphic Design</h4>
+                        <p class="discipline-desc">
+                            Visually striking designs balancing creativity and functionality. Typography systems, branding, and assets crafted for digital platforms.
+                        </p>
+                    </div>
 
-                        <div class="discipline-stack">
-                            STACK: Figma &bull; Vector Systems &bull; Typography &bull; Color Science &bull; UI Kits
-                        </div>
-                    </article>
+                    <div class="discipline-stack">
+                        STACK: Figma &bull; Vector Systems &bull; Typography &bull; Color Science &bull; UI Kits
+                    </div>
+                </article>
 
-                    <!-- Discipline 3: Video Editing -->
-                    <article class="discipline-card">
-                        <div class="discipline-top">
-                            <div class="discipline-icon-box" aria-hidden="true">
-                                <img src="assets/images/tools/scissor.png" alt="Video Editing Icon" class="discipline-icon" />
-                            </div>
-                            <span class="discipline-index">SPEC // 03</span>
+                <!-- Discipline 3: Video Editing -->
+                <article class="discipline-card">
+                    <div class="discipline-top">
+                        <div class="discipline-icon-box" aria-hidden="true">
+                            <img src="assets/images/tools/scissor.png" alt="Video Editing Icon" class="discipline-icon" />
                         </div>
+                        <span class="discipline-index">SPEC // 03</span>
+                    </div>
 
-                        <div class="discipline-info">
-                            <span class="discipline-sub">CINEMA &amp; MOTION DESIGN</span>
-                            <h4 class="discipline-title">Video Editing</h4>
-                            <p class="discipline-desc">
-                                Video editing for social media, marketing, and content creators with smooth transitions, color grading, audio sync, and storytelling.
-                            </p>
-                        </div>
+                    <div class="discipline-info">
+                        <span class="discipline-sub">CINEMA &amp; MOTION DESIGN</span>
+                        <h4 class="discipline-title">Video Editing</h4>
+                        <p class="discipline-desc">
+                            Video editing for social media, marketing, and content creators with smooth transitions, color grading, audio sync, and storytelling.
+                        </p>
+                    </div>
 
-                        <div class="discipline-stack">
-                            STACK: Premiere Pro &bull; After Effects &bull; Color Grading &bull; Sound Staging
-                        </div>
-                    </article>
-                </div>
+                    <div class="discipline-stack">
+                        STACK: Premiere Pro &bull; After Effects &bull; Color Grading &bull; Sound Staging
+                    </div>
+                </article>
             </div>
 
-            <!-- 2. Applications Section (Interactive Horizontal Timeline) -->
-            <div class="sub-section applications-section" aria-label="Applications Timeline">
-                <div class="sub-section-header">
-                    <h3 class="sub-section-title">Applications</h3>
-                </div>
+            <!-- 2. Applications Section: 300vh Scroll Runway for True Scroll-Pinning -->
+            <div class="applications-runway" id="applicationsRunway" aria-label="Applications Timeline">
+                <div class="applications-sticky-stage" id="applicationsStickyStage">
+                    <div class="sub-section-header">
+                        <h3 class="sub-section-title">Applications</h3>
+                    </div>
 
-                <div class="applications-scroll-container" id="applicationsScrollContainer" tabindex="0" role="region" aria-label="Applications timeline horizontal scroll">
+                    <div class="applications-scroll-container" id="applicationsScrollContainer" tabindex="0" role="region" aria-label="Applications timeline horizontal scroll">
                     <div class="applications-track" id="applicationsTrack">
                         <!-- Horizontal Axis Line with Arrowhead -->
                         <div class="applications-axis" aria-hidden="true">
                             <div class="applications-arrow"></div>
                         </div>
 
-                        <!-- 1. Adobe After Effects -->
-                        <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Adobe After Effects">
+                        <!-- 1. Visual Studio Code -->
+                        <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Visual Studio Code">
                             <div class="app-icon-wrap">
-                                <img src="assets/images/tools-logo/after-effects.png" alt="Adobe After Effects" class="app-logo" loading="lazy" />
+                                <img src="assets/images/tools-logo/vscode.png" alt="Visual Studio Code" class="app-logo" loading="lazy" />
                             </div>
-                            <span class="app-name">After Effects</span>
+                            <span class="app-name">VSCode</span>
                             <div class="app-node" aria-hidden="true">
                                 <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
                             </div>
@@ -588,12 +574,12 @@ require_once __DIR__ . '/includes/header.php';
                             </div>
                         </a>
 
-                        <!-- 7. Microsoft Edge -->
-                        <a href="https://www.microsoft.com/edge" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Microsoft Edge">
+                        <!-- 7. Monday -->
+                        <a href="http://monday.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Monday">
                             <div class="app-icon-wrap">
-                                <img src="assets/images/tools-logo/monday.svg" alt="Microsoft Edge" class="app-logo" loading="lazy" />
+                                <img src="assets/images/tools-logo/monday.svg" alt="Monday" class="app-logo" loading="lazy" />
                             </div>
-                            <span class="app-name">Microsoft Edge</span>
+                            <span class="app-name">Monday</span>
                             <div class="app-node" aria-hidden="true">
                                 <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
                             </div>
@@ -665,12 +651,12 @@ require_once __DIR__ . '/includes/header.php';
                             </div>
                         </a>
 
-                        <!-- 14. Visual Studio Code -->
-                        <a href="https://code.visualstudio.com/" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Visual Studio Code">
+                        <!-- 14. Adobe After Effects -->
+                        <a href="https://www.adobe.com/products/aftereffects.html" target="_blank" rel="noopener noreferrer" class="app-item" aria-label="Adobe After Effects">
                             <div class="app-icon-wrap">
-                                <img src="assets/images/tools-logo/vscode.png" alt="Visual Studio Code" class="app-logo" loading="lazy" />
+                                <img src="assets/images/tools-logo/after-effects.png" alt="Adobe After Effects" class="app-logo" loading="lazy" />
                             </div>
-                            <span class="app-name">VSCode</span>
+                            <span class="app-name">After Effects</span>
                             <div class="app-node" aria-hidden="true">
                                 <svg class="app-star" viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M12 0 C12 6.627 6.627 12 0 12 C6.627 12 12 17.373 12 24 C12 17.373 17.373 12 24 12 C17.373 12 12 6.627 12 0 Z"/></svg>
                             </div>
@@ -679,12 +665,16 @@ require_once __DIR__ . '/includes/header.php';
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
     <!-- ========================================================================
          SECTION 5: CONTACT (Dossier + Communication + Form)
          ======================================================================== -->
     <section class="page-wrapper section-target" id="contact" role="region" aria-label="Initiate Contact &amp; Dossier">
+        <!-- Texture Overlay: High-contrast monochrome screen grain like home -->
+        <div class="hero-grain-overlay" aria-hidden="true"></div>
+
         <div class="page-container">
             <!-- Page Header -->
             <div class="page-header">

@@ -41,13 +41,19 @@ $isHome = ($currentPage === 'home');
         <div class="cursor-dot" id="cursorDot"></div>
         <div class="cursor-triangle-wrap" id="cursorTriangleWrap">
             <svg class="cursor-triangle" id="cursorTriangle" viewBox="-32 -32 64 64" width="56" height="56" aria-hidden="true">
-                <polygon id="cursorMorphPoly" points="0,-26 6,-13 12,0 24,15 0,15 -24,15 -12,0 -6,-13" fill="#FFFFFF"/>
+                <polygon id="cursorMorphPoly" points="0,-24 6.67,-10.67 13.33,2.67 20,16 0,16 -20,16 -13.33,2.67 -6.67,-10.67" fill="#FFFFFF"/>
             </svg>
         </div>
     </div>
 
     <!-- Top Navigation (Anchors with Smooth Scroll & Hanging Brutalist Tabs) -->
     <header class="site-header" id="siteHeader">
+        <!-- Brutalist Mobile Hamburger Button (Strictly <= 900px) -->
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle Navigation Menu" aria-expanded="false" aria-controls="mobileNavOverlay">
+            <span class="nav-toggle-icon" id="navToggleIcon" aria-hidden="true">☰</span>
+        </button>
+
+        <!-- Desktop Navigation Tabs (Strictly > 900px) -->
         <nav class="site-nav" id="siteNav" aria-label="Main Navigation">
             <a href="<?= $isHome ? '#home' : $basePath . 'index.php#home' ?>" class="nav-link <?= $isHome ? 'active' : '' ?>" data-nav="home">home</a>
             <a href="<?= $isHome ? '#projects' : $basePath . 'index.php#projects' ?>" class="nav-link" data-nav="projects">projects</a>
@@ -55,4 +61,15 @@ $isHome = ($currentPage === 'home');
             <a href="<?= $isHome ? '#tools' : $basePath . 'index.php#tools' ?>" class="nav-link" data-nav="tools">tools</a>
             <a href="<?= $isHome ? '#contact' : $basePath . 'index.php#contact' ?>" class="nav-link" data-nav="contact">contact</a>
         </nav>
+
+        <!-- Brutalist Mobile Fullscreen Navigation Overlay (Strictly <= 900px) -->
+        <div class="mobile-nav-overlay" id="mobileNavOverlay" aria-hidden="true">
+            <nav class="mobile-nav" aria-label="Mobile Navigation">
+                <a href="<?= $isHome ? '#home' : $basePath . 'index.php#home' ?>" class="mobile-nav-link <?= $isHome ? 'active' : '' ?>" data-nav="home">home</a>
+                <a href="<?= $isHome ? '#projects' : $basePath . 'index.php#projects' ?>" class="mobile-nav-link" data-nav="projects">projects</a>
+                <a href="<?= $isHome ? '#experience' : $basePath . 'index.php#experience' ?>" class="mobile-nav-link" data-nav="experience">experience</a>
+                <a href="<?= $isHome ? '#tools' : $basePath . 'index.php#tools' ?>" class="mobile-nav-link" data-nav="tools">tools</a>
+                <a href="<?= $isHome ? '#contact' : $basePath . 'index.php#contact' ?>" class="mobile-nav-link" data-nav="contact">contact</a>
+            </nav>
+        </div>
     </header>

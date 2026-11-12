@@ -5,7 +5,7 @@
 
 /* --- CSS VARIABLES & THEME TOKENS --------------------------------------- */
 :root {
-    --bg-concrete: #A6A6A6;
+    --bg-concrete: #8C8C8C;
     --color-black: #000000;
     --color-white: #FFFFFF;
     --color-concrete-dark: #7F7F7F;
@@ -27,7 +27,8 @@
 }
 
 html {
-    scroll-behavior: smooth;
+    /* JS handles smooth scrolling; CSS smooth-scroll fights GSAP ScrollTrigger pinning */
+    scroll-behavior: auto;
 }
 
 html, body {
@@ -38,7 +39,7 @@ html, body {
     font-family: var(--font-body);
     font-size: 16px;
     line-height: 1.4;
-    overflow-x: hidden;
+    overflow-x: clip;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -128,6 +129,14 @@ html, body {
     color: var(--color-white);
 }
 
+/* Brutalist Hamburger Button & Mobile Nav Overlay (Strictly Hidden on Desktop > 900px) */
+@media (min-width: 901px) {
+    .nav-toggle,
+    .mobile-nav-overlay {
+        display: none !important;
+    }
+}
+
 /* --- PRIMARY HERO SHOWCASE WRAPPER -------------------------------------- */
 .section-target {
     scroll-margin-top: 0;
@@ -142,21 +151,47 @@ html, body {
     overflow: hidden;
     display: flex;
     align-items: center;
+    border-bottom: 1px solid var(--color-black);
 }
 
 /* Texture Overlay: Exclusive High-contrast Monochrome Digital Screen Grain */
-.hero-grain-overlay {
+.hero-grain-overlay,
+.projects-grain-overlay,
+.page-grain-overlay {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
     z-index: 3;
-    opacity: 0.16;
+    /* Lower opacity for a smooth matte texture like your reference */
+    opacity: 0.22;
     mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    /* Lock tile size to 128px so the 256x256 SVG renders at 2x Retina sharpness */
+    background-size: 128px 128px; 
     background-repeat: repeat;
+    /* True monochrome desaturated high-frequency fractal noise */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' width='256' height='256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-0.7'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 9999;               /* above content, below nothing that needs clicks */
+    pointer-events: none;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' width='256' height='256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-0.7'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 256px 256px;
+}
+
+  body::before { animation: grain 0.8s steps(6) infinite; }
+  @keyframes grain {
+      0%,100% { background-position: 0 0; }
+      25% { background-position: -40px 30px; }
+      50% { background-position: 30px -50px; }
+      75% { background-position: -20px -30px; }
+  }
 
 /* --- HERO GRID LAYOUT --------------------------------------------------- */
 .hero-grid {
@@ -250,7 +285,7 @@ html, body {
     flex-wrap: wrap;
     gap: 1.6rem;
     padding-top: 0.4rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.18);
+    border-top: none;
 }
 
 .meta-tag {
@@ -369,6 +404,7 @@ html, body {
     height: auto;
     display: block;
     object-fit: contain;
+    filter: grayscale(100%);
 }
 
 /* --- SECONDARY PAGES (Clean sharp solid blocks as per moodboard) -------- */
@@ -379,7 +415,7 @@ html, body {
     padding: clamp(6rem, 8.5vh, 7.5rem) clamp(2rem, 6vw, 8rem) 5rem clamp(2rem, 6vw, 8rem);
     background-color: var(--bg-concrete);
     box-sizing: border-box;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 .page-container {
@@ -404,15 +440,24 @@ html, body {
 .page-title {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: clamp(3.4rem, 8.6vw, 10.2rem);
+    font-size: clamp(3.2rem, 7.8vw, 9.2rem);
     line-height: 0.86;
     letter-spacing: -0.025em;
     color: var(--color-black);
     text-transform: uppercase;
     margin: 0;
     margin-top: 3rem;
-    overflow-wrap: break-word;
-    word-break: break-word;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+}
+
+#experience .page-title,
+.page-title.morph-text[data-text="EXPERIENCE"] {
+    font-size: clamp(1.8rem, 6.6vw, 8.4rem);
+    white-space: nowrap !important;
+    overflow-wrap: normal !important;
+    word-break: normal !important;
 }
 
 .page-intro {
@@ -438,14 +483,6 @@ html, body {
     gap: 0.35rem;
 }
 
-.sub-section-index {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.82rem;
-    font-weight: 800;
-    letter-spacing: 0.14em;
-    color: var(--color-black);
-}
-
 .sub-section-title {
     font-family: var(--font-heading);
     font-size: clamp(1.4rem, 2.4vw, 2.2rem);
@@ -453,14 +490,6 @@ html, body {
     letter-spacing: -0.01em;
     color: var(--color-black);
     line-height: 1.1;
-}
-
-.sub-section-desc {
-    font-size: 0.98rem;
-    font-weight: 500;
-    color: rgba(0, 0, 0, 0.72);
-    max-width: 680px;
-    line-height: 1.45;
 }
 
 /* --- PROFILE / ABOUT DOSSIER BLOCK (experience.php) --------------------- */
@@ -483,6 +512,11 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
+}
+
+/* 1. Reduce the parent flex gap specifically inside the Tools section */
+#tools .page-container {
+    gap: 1.25rem;
 }
 
 .profile-image {
@@ -532,8 +566,8 @@ html, body {
     font-size: 0.8rem;
     font-weight: 800;
     letter-spacing: 0.1em;
-    border-bottom: 2px solid var(--color-black);
-    padding-bottom: 0.65rem;
+    border-bottom: none;
+    padding-bottom: 0;
 }
 
 .profile-role {
@@ -569,8 +603,8 @@ html, body {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
-    border-top: 2px solid var(--color-black);
-    padding-top: 1.4rem;
+    border-top: none;
+    padding-top: 0.25rem;
 }
 
 .metric-block {
@@ -768,11 +802,23 @@ html, body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 1.15rem;
     font-weight: 900;
-    letter-spacing: 0.35rem;
+    gap: 0.35rem;
     color: var(--color-black);
     display: inline-flex;
     align-items: center;
     line-height: 1;
+}
+
+.testimonial-rating .rating-star {
+    display: inline-block;
+    cursor: pointer;
+    transition: color 200ms ease, transform 200ms cubic-bezier(0.16, 1, 0.3, 1), text-shadow 200ms ease;
+}
+
+.testimonial-rating .rating-star:hover {
+    color: #FFFFFF;
+    transform: scale(1.28);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 .testimonial-quote {
@@ -788,8 +834,8 @@ html, body {
     display: flex;
     align-items: center;
     gap: 0.9rem;
-    border-top: 2px solid var(--color-black);
-    padding-top: 1rem;
+    border-top: none;
+    padding-top: 0.4rem;
 }
 
 .author-mark {
@@ -914,8 +960,8 @@ html, body {
 }
 
 .discipline-stack {
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    padding-top: 1.1rem;
+    border-top: none;
+    padding-top: 0.35rem;
     font-family: 'Courier New', Courier, monospace;
     font-size: 0.78rem;
     font-weight: 800;
@@ -924,32 +970,34 @@ html, body {
     line-height: 1.5;
 }
 
-/* --- APPLICATIONS HORIZONTAL TIMELINE ---------------- */
-.applications-section {
+/* --- APPLICATIONS SCROLL STAGE & PINNED WRAPPER ------------ */
+.applications-runway {
     position: relative;
     width: 100%;
+    margin: 0.5rem 0 0 0;
+    overflow: hidden;
+}
+
+.applications-sticky-stage {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Removed the duplicate justify-content: center */
+    min-height: auto;
+    padding: 0 0 1rem 0;
+    background-color: var(--bg-concrete);
+    z-index: 5;
 }
 
 .applications-scroll-container {
     width: 100%;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
-    cursor: grab;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 1rem 0 1.5rem 0;
+    overflow: hidden;
+    position: relative;
 }
 
 .applications-scroll-container::-webkit-scrollbar {
     display: none;
-}
-
-.applications-scroll-container.is-dragging {
-    cursor: grabbing;
-    scroll-behavior: auto;
 }
 
 .applications-track {
@@ -960,6 +1008,7 @@ html, body {
     width: max-content;
     padding: 2.5rem 6rem 3rem 3rem;
     gap: 4.5rem;
+    will-change: transform;
 }
 
 /* Continuous horizontal timeline axis line */
@@ -1009,12 +1058,15 @@ html, body {
     transform: translateY(-4px);
 }
 
-.app-item:hover .app-logo {
+.app-item:hover .app-logo,
+img.app-logo:hover {
     transform: scale(1.08);
+    filter: grayscale(0%) contrast(100%);
 }
 
-.app-item:hover .app-name {
-    text-decoration: underline;
+.app-item:hover .app-name,
+.app-item:hover span.app-name {
+    text-decoration: none;
 }
 
 .app-icon-wrap {
@@ -1036,7 +1088,8 @@ html, body {
     display: block;
 }
 
-.app-name {
+.app-name,
+span.app-name {
     font-family: var(--font-heading);
     font-size: 0.95rem;
     font-weight: 700;
@@ -1045,6 +1098,7 @@ html, body {
     white-space: nowrap;
     letter-spacing: -0.01em;
     line-height: 1.2;
+    text-decoration: none;
 }
 
 /* Star node container sitting directly on the axis */
@@ -1064,11 +1118,14 @@ html, body {
     height: 22px;
     color: var(--color-black);
     display: block;
-    transition: transform 200ms ease;
+    transition: transform 200ms ease, color 200ms ease, fill 200ms ease;
 }
 
-.app-item:hover .app-star {
+.app-item:hover .app-star,
+.app-star:hover {
     transform: scale(1.18);
+    color: #FFFFFF;
+    fill: #FFFFFF;
 }
 
 /* --- INITIATE CONTACT & DOSSIER (contact.php) --------------------------- */
@@ -1580,6 +1637,29 @@ html, body {
     transform: translateY(-2px);
 }
 
+/* --- SITE FOOTER & COPYRIGHT -------------------------------------------- */
+.site-footer {
+    width: 100%;
+    padding: 2.5rem 1.5rem 3.5rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: var(--bg-concrete);
+    position: relative;
+    z-index: 5;
+}
+
+.site-footer .copyright {
+    font-family: var(--font-body);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-black);
+    margin: 0;
+    text-align: center;
+}
+
 .page-placeholder-card {
     background: rgba(255, 255, 255, 0.45);
     border: 2px solid var(--color-black);
@@ -1616,23 +1696,28 @@ html, body {
     flex-direction: column;
     justify-content: flex-start;
     padding: clamp(6rem, 8.5vh, 7.5rem) 0 clamp(4rem, 8vh, 6rem) 0;
-    overflow-x: hidden;
+    overflow-x: clip;
     box-sizing: border-box;
 }
 
 /* Screen Grain Texture Overlay */
+.hero-grain-overlay,
 .projects-grain-overlay,
 .page-grain-overlay {
-    position: fixed;
+    position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 1;
-    opacity: 0.16;
+    z-index: 3;
+    /* Lower opacity for a smooth matte texture like your reference */
+    opacity: 0.22;
     mix-blend-mode: overlay;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    /* Lock tile size to 128px so the 256x256 SVG renders at 2x Retina sharpness */
+    background-size: 128px 128px; 
     background-repeat: repeat;
+    /* True monochrome desaturated high-frequency fractal noise */
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' width='256' height='256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-0.7'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 .projects-header-container,
@@ -1659,7 +1744,7 @@ html, body {
 .projects-title {
     font-family: var(--font-heading);
     font-weight: 700;
-    font-size: clamp(3.4rem, 8.6vw, 10.2rem);
+    font-size: clamp(3.2rem, 7.8vw, 9.2rem);
     line-height: 0.86;
     letter-spacing: -0.025em;
     color: var(--color-black);
@@ -1667,6 +1752,9 @@ html, body {
     user-select: none;
     margin: 0;
     margin-top: 3rem;
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
 }
 
 .projects-cta-pill {
@@ -1893,7 +1981,7 @@ html, body {
     padding: clamp(6rem, 8.5vh, 7.5rem) clamp(2rem, 8vw, 8rem) 5rem clamp(2rem, 8vw, 8rem);
     background-color: var(--bg-concrete);
     box-sizing: border-box;
-    overflow-x: hidden;
+    overflow-x: clip;
 }
 
 .case-study-hero {
@@ -1917,9 +2005,9 @@ html, body {
 }
 
 /* --- RESPONSIVE ADAPTATIONS --------------------------------------------- */
-@media (max-width: 1400px) {
+@media (max-width: 1440px) {
     .site-header {
-        padding: 2.2rem 8vw 1.5rem 8vw;
+        padding: 2.2rem 6vw 1.5rem 6vw;
     }
     .hero-right-pane {
         width: 48vw;
@@ -1928,6 +2016,20 @@ html, body {
         top: -41.2vh;
         right: -37vh;
         height: 161.5vh;
+    }
+    .page-title {
+        font-size: clamp(3rem, 6.2vw, 6.6rem);
+        line-height: 0.9;
+        white-space: nowrap;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+    #experience .page-title,
+    .page-title.morph-text[data-text="EXPERIENCE"] {
+        font-size: clamp(2.8rem, 5.8vw, 6.2rem);
+        white-space: nowrap;
+        overflow-wrap: normal;
+        word-break: normal;
     }
 }
 
@@ -1949,43 +2051,181 @@ html, body {
 }
 
 @media (max-width: 900px) {
+    /* Hide desktop hanging tabs on mobile/tablet */
+    .site-nav {
+        display: none !important;
+    }
+
     .site-header {
         padding: 1.25rem 1.5rem;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        pointer-events: none;
+        overflow: visible;
+        animation: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+        z-index: 10000;
     }
-    .site-nav {
-        gap: 0.5rem;
+
+    /* Brutalist Hamburger Button (Strictly <= 900px) */
+    .nav-toggle {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        width: 48px;
+        height: 48px;
+        background-color: var(--color-black);
+        color: var(--color-white);
+        border: 2px solid var(--color-black);
+        cursor: pointer;
+        pointer-events: auto;
+        z-index: 10002;
+        position: relative;
+        font-family: var(--font-heading);
+        font-size: 1.4rem;
+        line-height: 1;
+        padding: 0;
+        transition: background-color 200ms ease, color 200ms ease, transform 150ms ease;
     }
-    .nav-link {
-        font-size: 0.95rem;
-        padding: 0.2rem 0.4rem;
+
+    .nav-toggle:active {
+        transform: scale(0.94);
     }
+
+    .nav-toggle.is-open {
+        background-color: var(--color-white);
+        color: var(--color-black);
+    }
+
+    .nav-toggle-icon {
+        display: block;
+        line-height: 1;
+        font-weight: 800;
+        user-select: none;
+    }
+
+    /* Brutalist Full-Screen Mobile Navigation Overlay (Strictly <= 900px) */
+    .mobile-nav-overlay {
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        background-color: var(--bg-concrete);
+        z-index: 10001;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 260ms;
+    }
+
+    .mobile-nav-overlay.is-active {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition: opacity 260ms cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0s;
+    }
+
+    body.mobile-nav-open {
+        overflow: hidden !important;
+    }
+
+    .mobile-nav {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+        padding: 2rem;
+    }
+
+    .mobile-nav-link {
+        font-family: var(--font-heading);
+        font-size: clamp(2rem, 7.5vw, 3.2rem);
+        font-weight: 700;
+        color: var(--color-black);
+        text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: -0.02em;
+        padding: 0.35rem 1.25rem;
+        border: 2px solid transparent;
+        transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
+    }
+
+    .mobile-nav-link.active,
+    .mobile-nav-link:hover,
+    .mobile-nav-link:focus-visible {
+        background-color: var(--color-black);
+        color: var(--color-white);
+        border-color: var(--color-black);
+    }
+
     .hero-grid {
         grid-template-columns: 1fr;
     }
+
     .hero-left-pane {
         padding-left: 2rem;
         padding-right: 2rem;
         padding-top: 5rem;
         z-index: 10;
     }
+
+    /* Hide eye-tracking portrait layers 1-4 and the cat gif */
+    .portrait-layer.layer-1,
+    .portrait-layer.layer-2,
+    .portrait-layer.layer-3,
+    .portrait-layer.layer-4,
+    .portrait-top-gif,
+    .top-gif-img {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    /* Show only Man_base_looking_straight_0.png (.layer-0) static & centered */
     .hero-right-pane {
+        position: absolute;
+        inset: 0;
         width: 100%;
-        height: 100vh;
-        opacity: 0.38; /* Soft background blend on tablet */
+        height: 100%;
+        opacity: 0.35;
+        z-index: 1;
+        pointer-events: none;
+        overflow: hidden;
     }
-    .portrait-layer {
-        left: 65%;
-        bottom: -4vh;
-        height: 100vh;
+
+    .portrait-stage {
+        position: relative;
+        width: 100%;
+        height: 100%;
     }
-    .portrait-top-gif {
-        top: 50%;
-        left: 55%;
-        transform: translate(-50%, -50%) scale(0.92);
-        width: clamp(200px, 55vw, 280px);
-    }
-    .portrait-top-gif.is-active {
-        transform: translate(-50%, -50%) scale(1);
+
+    .portrait-layer.layer-0,
+    .portrait-layer.is-base {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        position: absolute;
+        left: 50% !important;
+        top: 50% !important;
+        right: auto !important;
+        bottom: auto !important;
+        transform: translate(-50%, -50%) !important;
+        height: 85vh !important;
+        width: auto !important;
+        max-width: none !important;
+        pointer-events: none !important;
+        transition: none !important;
+        animation: none !important;
+        z-index: 1 !important;
     }
 
     /* Projects Mobile/Tablet Fallback: Vertical Stack with Horizontal Scroll Strip */
@@ -2009,8 +2249,15 @@ html, body {
 
     .page-title,
     .projects-title {
-        font-size: clamp(2.8rem, 12vw, 4.8rem);
+        font-size: clamp(2.4rem, 10vw, 4.4rem);
         line-height: 0.9;
+        white-space: nowrap;
+    }
+
+    #experience .page-title,
+    .page-title.morph-text[data-text="EXPERIENCE"] {
+        font-size: clamp(1.8rem, 6.8vw, 4rem);
+        white-space: nowrap !important;
     }
 
     .projects-cta-pill {
@@ -2102,9 +2349,38 @@ html, body {
         gap: 1.5rem;
     }
 
+    .applications-runway {
+        height: auto !important;
+        margin: 1.5rem 0 0 0;
+    }
+
+    .applications-sticky-stage {
+        position: static !important;
+        top: auto !important;
+        padding: 0;
+        background-color: transparent !important;
+        min-height: auto !important;
+    }
+
+    .applications-scroll-container {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        cursor: grab;
+        overscroll-behavior-x: contain;
+    }
+
+    .applications-scroll-container::-webkit-scrollbar {
+        display: none !important;
+    }
+
     .applications-track {
+        display: flex !important;
+        flex-direction: row !important;
+        width: max-content !important;
         gap: 3.5rem;
-        padding: 2rem 4rem 2.75rem 2rem;
+        padding: 1.5rem 4rem 2.5rem 1.5rem;
     }
 
     .form-row {
@@ -2114,24 +2390,19 @@ html, body {
 
 @media (max-width: 600px) {
     .site-header {
-        padding: 0.85rem 0.5rem;
-        box-sizing: border-box;
+        padding: 0.85rem 1.25rem;
     }
-    .site-nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        width: 100%;
-        max-width: 100%;
-        gap: 0;
+    .nav-toggle {
+        width: 44px;
+        height: 44px;
+        font-size: 1.25rem;
     }
-    .nav-link {
-        font-size: clamp(0.6rem, 2.2vw, 0.72rem);
-        font-weight: 800;
-        padding: 0.2rem 0.1rem;
-        letter-spacing: -0.03em;
-        white-space: nowrap;
-        text-align: center;
+    .mobile-nav {
+        gap: 1.15rem;
+    }
+    .mobile-nav-link {
+        font-size: clamp(1.6rem, 7.5vw, 2.4rem);
+        padding: 0.3rem 0.9rem;
     }
     .section-target {
     scroll-margin-top: 0;
@@ -2177,23 +2448,19 @@ html, body {
         padding-top: 0.4rem;
     }
     .hero-right-pane {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        opacity: 0.38;
+        opacity: 0.35;
         z-index: 1;
     }
-    .portrait-layer {
-        left: 65%;
-        right: auto;
-        transform: translateX(-50%);
-        bottom: -3vh;
-        top: auto;
-        height: 82vh;
-        max-height: none;
+    .portrait-layer.layer-0,
+    .portrait-layer.is-base {
+        height: 75vh !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
     }
 
     .projects-page-wrapper {
@@ -2207,10 +2474,19 @@ html, body {
 
     .page-title,
     .projects-title {
-        font-size: clamp(2.4rem, 14vw, 3.6rem);
+        font-size: clamp(1.8rem, 11vw, 3.2rem);
         line-height: 0.9;
-        overflow-wrap: break-word;
-        word-break: break-word;
+        white-space: nowrap;
+        overflow-wrap: normal;
+        word-break: normal;
+    }
+
+    #experience .page-title,
+    .page-title.morph-text[data-text="EXPERIENCE"] {
+        font-size: clamp(1.4rem, 7.4vw, 2.4rem);
+        white-space: nowrap !important;
+        overflow-wrap: normal !important;
+        word-break: normal !important;
     }
 
     .project-display-card {
@@ -2236,10 +2512,6 @@ html, body {
         padding: 4.8rem 1rem 3rem 1rem;
     }
 
-    .sub-section-title {
-        font-size: clamp(1.2rem, 5.5vw, 1.8rem);
-        overflow-wrap: break-word;
-    }
 
     .profile-card {
         padding: 1.25rem;
@@ -2337,18 +2609,13 @@ html, body {
 /* --- HOVER COMPACT COLLAPSE STATE --------------------------------------- */
 /* When hovering any interactive element (<a>, <button>, nav, badges, etc.) */
 .custom-cursor.is-hovering .cursor-triangle {
-    /* Triangle smoothly collapses down into a compact, precision state */
-    transform: scale(0.35);
+    transform: scale(0.88);
     transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Click / Mousedown tactile press reaction */
-.custom-cursor.is-active:not(.is-hovering) .cursor-triangle {
-    transform: scale(0.85);
-}
-
-.custom-cursor.is-active.is-hovering .cursor-triangle {
-    transform: scale(0.26);
+/* Click / Mousedown: 4-pointed star reaction */
+.custom-cursor.is-active .cursor-triangle {
+    transform: scale(1.08);
 }
 
 /* Disable custom cursor entirely on touchscreen/coarse devices */
@@ -2735,5 +3002,200 @@ html, body {
     }
     .applications-axis {
         bottom: calc(2.5rem + 13px);
+    }
+}
+
+/* --- APPLICATIONS: full-screen pinned panel (desktop only) -------------- */
+/* --- APPLICATIONS: Compact Pinned Stage with Discipline Cards Visible --- */
+@media (min-width: 901px) {
+    #tools {
+        padding-bottom: 2rem; /* Reduces bottom space before Contact */
+    }
+
+    #tools .page-container {
+        gap: 1.5rem; /* Tightens space between Primary Specializations & Applications */
+    }
+
+    .applications-runway {
+        margin: 0.5rem 0 0 0;
+        min-height: auto; /* Removes the 100vh giant gap */
+        height: auto;
+        display: block;
+    }
+
+    .applications-sticky-stage {
+        background-color: transparent;
+        min-height: auto;
+        padding: 0;
+        justify-content: flex-start;
+    }
+
+    .applications-track {
+        padding: 1.25rem 6rem 2rem 3rem; /* Tightens top/bottom padding around icons */
+    }
+
+    .applications-axis {
+        bottom: calc(2rem + 13px); /* Keeps axis line aligned with star nodes */
+    }
+
+    #contact {
+        padding-top: 3rem; /* Pulls Contact closer after unpinning */
+    }
+}
+
+@media (max-width: 900px) {
+    .sub-section-title {
+        font-size: clamp(1.2rem, 5.5vw, 1.8rem);
+        overflow-wrap: break-word;
+    }
+}
+
+/* ========================================================================
+   HERO: MOBILE / TABLET (<= 900px)
+   Name -> intro -> meta, with the portrait rising from the bottom edge
+   of the hero (no frame, transparent cut-out on the page background).
+
+   Tuning knobs (on .hero-right-pane):
+     --portrait-height : how tall the visible portrait area is
+     --portrait-pos    : which part of the photo shows (x% y%).
+                         Higher y% = shows lower part (more chest),
+                         lower y% = shows higher part (more headroom).
+   ======================================================================== */
+@media (max-width: 900px) {
+    .hero-wrapper {
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        padding: 5.5rem 0 0 0;
+        align-items: stretch;
+    }
+
+    .hero-grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: 0;
+        height: auto;
+        min-height: calc(100vh - 5.5rem);
+        min-height: calc(100dvh - 5.5rem);
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 0 1.25rem;
+        box-sizing: border-box;
+    }
+
+    .hero-left-pane {
+        padding: 0;
+        justify-content: flex-start;
+        z-index: 5;
+    }
+
+    /* --- Name: sized from the real available width so it never overflows.
+           "SANTIAGO" is ~6.7em wide in Syncopate Bold; /7.1 leaves headroom. */
+    .hero-name {
+        font-size: min(calc((100vw - 2.5rem) / 7.1), 4.8rem);
+        line-height: 0.9;
+        letter-spacing: -0.015em;
+        margin-bottom: 1.5rem;
+        max-width: 100%;
+    }
+
+    .name-row {
+        white-space: nowrap;
+    }
+
+    .name-first {
+        margin-left: 0;
+    }
+
+    .name-last {
+        text-shadow: 0.045em 0.045em 0 var(--color-black);
+    }
+
+    /* --- Intro text --- */
+    .hero-info-block {
+        max-width: 34rem;
+        gap: 1.3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-description {
+        max-width: 34ch;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.55;
+        color: rgba(0, 0, 0, 0.9);
+        padding-left: 0.95rem;
+        border-left: 3px solid var(--color-black);
+    }
+
+    .hero-meta-row {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 0.5rem 2rem;
+        padding-top: 1rem;
+        border-top: 2px solid var(--color-black);
+    }
+
+    .tag-label {
+        font-size: 0.66rem;
+    }
+
+    .tag-val {
+        font-size: 0.82rem;
+    }
+
+    /* --- Portrait: no box, anchored to the bottom, full-bleed on phones ---
+           The photo is a tight head-and-shoulders cut-out, so we anchor it to
+           its bottom edge (50% 100%) and let the shoulders run off the hero. */
+    .hero-right-pane {
+        --portrait-ratio: 1 / 1.15;     /* width / height of the visible area */
+        --portrait-pos: 50% 100%;       /* lower y% = more headroom shown      */
+        position: relative;
+        inset: auto;
+        align-self: center;
+        margin: auto 0 0 0;             /* auto top = sit at the bottom        */
+        width: min(calc(100% + 2.5rem), 460px);
+        height: auto;
+        aspect-ratio: var(--portrait-ratio);
+        opacity: 1;
+        animation: none;
+        overflow: hidden;
+        z-index: 2;
+        border: 0;
+        box-shadow: none;
+        background: transparent;
+    }
+
+    .hero-right-pane::after {
+        content: none;
+    }
+
+    .hero-right-pane .portrait-stage {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .hero-right-pane .portrait-layer.layer-0,
+    .hero-right-pane .portrait-layer.is-base {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+        height: 100% !important;
+        transform: none !important;
+        object-fit: cover;
+        object-position: var(--portrait-pos);
+    }
+}
+
+@media (max-width: 380px) {
+    .hero-meta-row {
+        grid-template-columns: 1fr;
     }
 }

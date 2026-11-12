@@ -47,7 +47,8 @@
         const cursorTriangleWrap = document.getElementById('cursorTriangleWrap');
         const cursorMorphPoly = document.getElementById('cursorMorphPoly');
 
-        if (!customCursor || !cursorTriangleWrap || !cursorMorphPoly || isTouchDevice) {
+        // Strictly isolate desktop cursor: lightweight return on mobile / touch
+        if (window.innerWidth <= 900 || isTouchDevice || !customCursor || !cursorTriangleWrap || !cursorMorphPoly) {
             if (customCursor) customCursor.style.display = 'none';
             return;
         }
@@ -61,30 +62,27 @@
 
         // 8-Node Canonical Geometry Presets
         const CURSOR_SHAPES = {
-            // Mode 0: Default Upward Triangle
+            // Normal 3-line straight triangle with zero edge curve
             TRIANGLE: [
-                { x: 0, y: -26 }, { x: 6, y: -13 }, { x: 12, y: 0 }, { x: 24, y: 15 },
-                { x: 0, y: 15 }, { x: -24, y: 15 }, { x: -12, y: 0 }, { x: -6, y: -13 }
+                { x: 0, y: -24 },
+                { x: 6.67, y: -10.67 },
+                { x: 13.33, y: 2.67 },
+                { x: 20, y: 16 },
+                { x: 0, y: 16 },
+                { x: -20, y: 16 },
+                { x: -13.33, y: 2.67 },
+                { x: -6.67, y: -10.67 }
             ],
-            // Mode 1: Precision Viewfinder Box (over projects/media)
-            VIEWFINDER: [
-                { x: -18, y: -18 }, { x: 0, y: -18 }, { x: 18, y: -18 }, { x: 18, y: 0 },
-                { x: 18, y: 18 }, { x: 0, y: 18 }, { x: -18, y: 18 }, { x: -18, y: 0 }
-            ],
-            // Mode 2: Inverted Faceted Diamond (over interactive links & buttons)
-            DIAMOND: [
-                { x: 0, y: -24 }, { x: 12, y: -12 }, { x: 24, y: 0 }, { x: 12, y: 12 },
-                { x: 0, y: 24 }, { x: -12, y: 12 }, { x: -24, y: 0 }, { x: -12, y: -12 }
-            ],
-            // Mode 3: Vertical Brutalist Chisel / Beam (over typography)
-            CHISEL: [
-                { x: -3, y: -26 }, { x: 0, y: -28 }, { x: 3, y: -26 }, { x: 3, y: 26 },
-                { x: 0, y: 28 }, { x: -3, y: 26 }, { x: -3, y: 0 }, { x: -3, y: -14 }
-            ],
-            // Mode 4: Dense Cross Reticle (on mousedown click)
-            RETICLE: [
-                { x: 0, y: -14 }, { x: 4, y: -4 }, { x: 14, y: 0 }, { x: 4, y: 4 },
-                { x: 0, y: 14 }, { x: -4, y: 4 }, { x: -14, y: 0 }, { x: -4, y: -4 }
+            // 4-pointed star on click
+            STAR_4: [
+                { x: 0, y: -24 },
+                { x: 5, y: -5 },
+                { x: 24, y: 0 },
+                { x: 5, y: 5 },
+                { x: 0, y: 24 },
+                { x: -5, y: 5 },
+                { x: -24, y: 0 },
+                { x: -5, y: -5 }
             ]
         };
 
@@ -94,10 +92,10 @@
 
         function setCursorTargetShape(shapeName) {
             if (isMouseDown) {
-                targetPoints = CURSOR_SHAPES.RETICLE;
-                return;
+                targetPoints = CURSOR_SHAPES.STAR_4;
+            } else {
+                targetPoints = CURSOR_SHAPES.TRIANGLE;
             }
-            targetPoints = CURSOR_SHAPES[shapeName] || CURSOR_SHAPES.TRIANGLE;
         }
 
         // Mouse coordinates
@@ -119,44 +117,26 @@
             const target = e.target;
             if (!target || !target.closest) return;
 
-            if (target.closest('.project-display-card, .accordion-slice, .archive-card, .video-frame, .profile-image-wrap, .cert-image-frame, .dossier-preview-frame, .morph-canvas, .hud-canvas-wrap')) {
-                setCursorTargetShape('VIEWFINDER');
+            if (target.closest('a, button, .nav-link, .back-btn, .projects-cta-pill, .submit-btn, [role="button"], .morph-pill-item, .brutalist-tag, .app-item, .rating-star, .accordion-slice, .project-display-card, .archive-card, .video-frame')) {
                 customCursor.classList.add('is-hovering');
-            } else if (target.closest('a, button, .nav-link, .back-btn, .projects-cta-pill, .submit-btn, [role="button"], .morph-pill-item, .brutalist-tag, .app-item')) {
-                setCursorTargetShape('DIAMOND');
-                customCursor.classList.add('is-hovering');
-            } else if (target.closest('h1, h2, h3, h4, .hero-name, .hero-description, .profile-headline, blockquote, input, textarea')) {
-                setCursorTargetShape('CHISEL');
-                customCursor.classList.remove('is-hovering');
             } else {
-                setCursorTargetShape('TRIANGLE');
                 customCursor.classList.remove('is-hovering');
             }
+            setCursorTargetShape(isMouseDown ? 'STAR_4' : 'TRIANGLE');
         }, { passive: true });
 
-        // Mousedown tactile morph
+        // Mousedown: becomes 4-pointed star
         window.addEventListener('mousedown', () => {
             isMouseDown = true;
-            targetPoints = CURSOR_SHAPES.RETICLE;
+            targetPoints = CURSOR_SHAPES.STAR_4;
             customCursor.classList.add('is-active');
         }, { passive: true });
 
+        // Mouseup: returns to straight 3-line triangle
         window.addEventListener('mouseup', () => {
             isMouseDown = false;
             customCursor.classList.remove('is-active');
-            // Re-trigger hover evaluation
-            const hovered = document.elementFromPoint(mouseX, mouseY);
-            if (hovered && hovered.closest) {
-                if (hovered.closest('.project-display-card, .accordion-slice, .archive-card, .video-frame')) {
-                    setCursorTargetShape('VIEWFINDER');
-                } else if (hovered.closest('a, button, .nav-link, .back-btn, .projects-cta-pill')) {
-                    setCursorTargetShape('DIAMOND');
-                } else {
-                    setCursorTargetShape('TRIANGLE');
-                }
-            } else {
-                setCursorTargetShape('TRIANGLE');
-            }
+            targetPoints = CURSOR_SHAPES.TRIANGLE;
         }, { passive: true });
 
         // Window leave / enter
@@ -165,7 +145,7 @@
 
         // Frame rendering loop
         const posLerp = prefersReducedMotion ? 1.0 : 0.22;
-        const morphLerp = prefersReducedMotion ? 1.0 : 0.26;
+        const morphLerp = prefersReducedMotion ? 1.0 : 0.35;
 
         function renderCursor() {
             if (isCursorVisible) {
@@ -213,6 +193,86 @@
     let portraitStage = null;
     let portraitTopGif = null;
     let layers = [];
+
+    // Easter Egg Audio: Happy Song (assets/audio/happy-happy-happy-song.mp3)
+    let happySongAudio = null;
+
+    // Gaze Direction Audio Mapping:
+    // Man_looking_downward_left_4   [4] -> sound-one.wav
+    // Man_looking_down_left_3       [3] -> sound-two.wav
+    // Man_looking_to_left_2         [2] -> sound-three.wav
+    // Man_looking_upward_and_left_1 [1] -> sound-four.wav
+    const GAZE_AUDIO_PATHS = {
+        1: 'assets/audio/sound-four.wav',
+        2: 'assets/audio/sound-three.wav',
+        3: 'assets/audio/sound-two.wav',
+        4: 'assets/audio/sound-one.wav'
+    };
+
+    const gazeAudioInstances = {};
+    let currentGazeSound = null;
+
+    function playGazeSound(layerIndex) {
+        if (window.innerWidth <= 900 || isTouchDevice) return;
+        const path = GAZE_AUDIO_PATHS[layerIndex];
+        if (!path) return;
+
+        try {
+            // Stop any currently playing gaze sound so transitions don't clash
+            if (currentGazeSound && !currentGazeSound.paused) {
+                currentGazeSound.pause();
+                currentGazeSound.currentTime = 0;
+            }
+
+            if (!gazeAudioInstances[layerIndex]) {
+                gazeAudioInstances[layerIndex] = new Audio(path);
+                gazeAudioInstances[layerIndex].preload = 'auto';
+            }
+
+            const audio = gazeAudioInstances[layerIndex];
+            audio.currentTime = 0;
+            currentGazeSound = audio;
+            const p = audio.play();
+            if (p !== undefined) {
+                p.catch(() => {});
+            }
+        } catch (err) {}
+    }
+
+    function stopGazeSounds() {
+        if (window.innerWidth <= 900 || isTouchDevice) return;
+        if (currentGazeSound && !currentGazeSound.paused) {
+            try {
+                currentGazeSound.pause();
+                currentGazeSound.currentTime = 0;
+            } catch (err) {}
+        }
+    }
+
+    function playHappySong() {
+        if (window.innerWidth <= 900 || isTouchDevice) return;
+        try {
+            if (!happySongAudio) {
+                happySongAudio = new Audio('assets/audio/happy-happy-happy-song.mp3');
+                happySongAudio.loop = true;
+            }
+            happySongAudio.currentTime = 0;
+            const p = happySongAudio.play();
+            if (p !== undefined) {
+                p.catch(() => {});
+            }
+        } catch (err) {}
+    }
+
+    function stopHappySong() {
+        if (window.innerWidth <= 900 || isTouchDevice) return;
+        if (happySongAudio) {
+            try {
+                happySongAudio.pause();
+                happySongAudio.currentTime = 0;
+            } catch (err) {}
+        }
+    }
 
     function primeImageCache() {
         IMAGE_ASSETS.forEach(asset => {
@@ -295,7 +355,9 @@
         if (newIndex === currentGaze && !isInstant) return;
 
         if (newIndex === 5) {
+            stopGazeSounds();
             if (portraitTopGif) portraitTopGif.classList.add('is-active');
+            playHappySong();
             if (transitionTimer) {
                 clearTimeout(transitionTimer);
                 transitionTimer = null;
@@ -310,8 +372,15 @@
             return;
         }
 
+        stopHappySong();
         if (portraitTopGif) {
             portraitTopGif.classList.remove('is-active');
+        }
+
+        if (!isInstant && GAZE_AUDIO_PATHS[newIndex]) {
+            playGazeSound(newIndex);
+        } else if (newIndex === 0) {
+            stopGazeSounds();
         }
 
         transitionToPortraitLayer(newIndex, isInstant);
@@ -397,12 +466,14 @@
         if (heroWrapper) {
             const rect = heroWrapper.getBoundingClientRect();
             if (rect.bottom <= 0 || rect.top >= window.innerHeight) {
-                if (currentGaze === 5 && portraitTopGif) {
-                    portraitTopGif.classList.remove('is-active');
+                if (currentGaze === 5) {
+                    stopHappySong();
+                    if (portraitTopGif) portraitTopGif.classList.remove('is-active');
                     transitionToPortraitLayer(0, true);
                     currentGaze = 0;
                     targetGaze = 0;
                 }
+                stopGazeSounds();
                 return;
             }
         }
@@ -421,6 +492,7 @@
     }
 
     function handleEyeMouseLeave() {
+        stopGazeSounds();
         targetGaze = 0;
         transitionToGaze(0, false);
     }
@@ -441,11 +513,31 @@
     }
 
     function handleTouchEnd() {
+        stopGazeSounds();
         targetGaze = 0;
         transitionToGaze(0, false);
     }
 
     function initEyeTracker() {
+        // Strictly isolate desktop eye-tracking: lightweight return on mobile / touch
+        if (window.innerWidth <= 900 || isTouchDevice) {
+            window.AdrianEyeTracker = {
+                setGaze: function () {},
+                simulateCursor: function () {},
+                playGazeSound: function () {},
+                stopGazeSounds: function () {},
+                getState: function () {
+                    return {
+                        currentGaze: 0,
+                        targetGaze: 0,
+                        isTopGifActive: false,
+                        layerName: 'DIRECT [0] (Mobile Static)'
+                    };
+                }
+            };
+            return;
+        }
+
         heroWrapper = document.getElementById('home') || document.getElementById('heroWrapper');
         portraitStage = document.getElementById('portraitStage');
         portraitTopGif = document.getElementById('portraitTopGif');
@@ -454,6 +546,15 @@
 
         layers = Array.from(portraitStage.querySelectorAll('.portrait-layer'));
         primeImageCache();
+
+        // Prime audio cache for gaze triggers
+        Object.entries(GAZE_AUDIO_PATHS).forEach(([idx, path]) => {
+            try {
+                const a = new Audio(path);
+                a.preload = 'auto';
+                gazeAudioInstances[idx] = a;
+            } catch (_) {}
+        });
 
         layers.forEach((layer, idx) => {
             if (idx === 0) {
@@ -488,6 +589,12 @@
                     targetGaze = newTarget;
                     transitionToGaze(targetGaze, false);
                 }
+            },
+            playGazeSound: function (idx) {
+                playGazeSound(idx);
+            },
+            stopGazeSounds: function () {
+                stopGazeSounds();
             },
             getState: function () {
                 return {
@@ -887,7 +994,7 @@
        6. ONE-PAGE NAVIGATION & SMOOTH SCROLL CONTROLLER
        ======================================================================== */
     function initSmoothScrollAndNavSpy() {
-        const navLinks = Array.from(document.querySelectorAll('.site-nav .nav-link'));
+        const navLinks = Array.from(document.querySelectorAll('.site-nav .nav-link, .mobile-nav .mobile-nav-link'));
         const sectionIds = ['home', 'projects', 'experience', 'tools', 'contact'];
         const sections = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
@@ -1125,102 +1232,133 @@
     }
 
     /* ========================================================================
-       8. APPLICATIONS HORIZONTAL WHEEL PAN & DRAG CONTROLLER
+       8. APPLICATIONS GSAP SCROLLTRIGGER HORIZONTAL PIN & PAN CONTROLLER
        ======================================================================== */
     function initApplicationsScroll() {
+        const toolsSection = document.getElementById('tools');
+        const runway = document.getElementById('applicationsRunway');
         const container = document.getElementById('applicationsScrollContainer');
-        if (!container) return;
+        const track = document.getElementById('applicationsTrack');
+        if (!toolsSection || !runway || !container || !track) return;
 
-        let targetScroll = container.scrollLeft;
-        let isAnimating = false;
+        // Distance needed for After Effects to reach the right edge of the container
+        const getTravelDistance = () => Math.max(0, track.scrollWidth - container.clientWidth);
 
-        function animateScroll() {
-            const current = container.scrollLeft;
-            const diff = targetScroll - current;
-            if (Math.abs(diff) > 0.8) {
-                container.scrollLeft = current + diff * 0.22;
-                requestAnimationFrame(animateScroll);
+        const enableNativeScroll = () => {
+            container.style.overflowX = 'auto';
+            container.style.webkitOverflowScrolling = 'touch';
+            container.style.scrollbarWidth = 'none';
+        };
+
+        if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined' || prefersReducedMotion) {
+            enableNativeScroll();
+            return;
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+        const mm = gsap.matchMedia();
+
+        // Desktop (> 900px): Freeze the #tools viewport with Specializations + Applications visible
+        mm.add('(min-width: 901px)', () => {
+            const toolsSection = document.getElementById('tools');
+            
+            gsap.to(track, {
+                x: () => -getTravelDistance(),
+                ease: 'none',
+                scrollTrigger: {
+                    trigger: toolsSection,
+                    // Pins as soon as both Specializations and Applications are in view
+                    start: 'bottom bottom-=40',
+                    end: () => `+=${getTravelDistance()}`,
+                    pin: toolsSection,
+                    pinSpacing: true,
+                    scrub: 1,
+                    anticipatePin: 1,
+                    invalidateOnRefresh: true
+                }
+            });
+        });
+
+        // Mobile / tablet (<= 900px): Native touch swipe
+        mm.add('(max-width: 900px)', () => {
+            enableNativeScroll();
+            gsap.set(track, { clearProps: 'transform' });
+            container.style.scrollBehavior = 'smooth';
+            return () => {
+                container.style.overflowX = '';
+                container.style.webkitOverflowScrolling = '';
+                container.style.scrollbarWidth = '';
+                container.style.scrollBehavior = '';
+            };
+        });
+
+        window.addEventListener('load', () => ScrollTrigger.refresh());
+        setTimeout(() => ScrollTrigger.refresh(), 200);
+    }
+
+    /* ========================================================================
+       8B. BRUTALIST MOBILE NAVIGATION CONTROLLER (Strictly <= 900px)
+       ======================================================================== */
+    function initMobileNav() {
+        const navToggle = document.getElementById('navToggle');
+        const navToggleIcon = document.getElementById('navToggleIcon');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+        if (!navToggle || !mobileNavOverlay) return;
+
+        function openMenu() {
+            navToggle.classList.add('is-open');
+            navToggle.setAttribute('aria-expanded', 'true');
+            if (navToggleIcon) navToggleIcon.textContent = '✕';
+            mobileNavOverlay.classList.add('is-active');
+            mobileNavOverlay.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('mobile-nav-open');
+        }
+
+        function closeMenu() {
+            navToggle.classList.remove('is-open');
+            navToggle.setAttribute('aria-expanded', 'false');
+            if (navToggleIcon) navToggleIcon.textContent = '☰';
+            mobileNavOverlay.classList.remove('is-active');
+            mobileNavOverlay.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('mobile-nav-open');
+        }
+
+        function toggleMenu() {
+            const isOpen = mobileNavOverlay.classList.contains('is-active');
+            if (isOpen) {
+                closeMenu();
             } else {
-                container.scrollLeft = targetScroll;
-                isAnimating = false;
+                openMenu();
             }
         }
 
-        // Horizontal mouse wheel panning:
-        // Scrolling down (deltaY > 0) pans cards left to right.
-        // Scrolling up (deltaY < 0) pans cards right to left.
-        // At edges, allows standard vertical page scroll to continue seamlessly.
-        container.addEventListener('wheel', (e) => {
-            const maxScroll = container.scrollWidth - container.clientWidth;
-            if (maxScroll <= 0) return;
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            toggleMenu();
+        });
 
-            const delta = Math.abs(e.deltaY) >= Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
-            const movingRight = delta > 0;
-            const movingLeft = delta < 0;
+        // Close menu when any mobile link is tapped
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                closeMenu();
+            });
+        });
 
-            const atRight = container.scrollLeft >= maxScroll - 4;
-            const atLeft = container.scrollLeft <= 4;
-
-            if ((movingRight && !atRight) || (movingLeft && !atLeft)) {
-                e.preventDefault();
-                targetScroll = Math.max(0, Math.min(maxScroll, targetScroll + delta * 1.5));
-                if (!isAnimating) {
-                    isAnimating = true;
-                    requestAnimationFrame(animateScroll);
-                }
+        // Close on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileNavOverlay.classList.contains('is-active')) {
+                closeMenu();
             }
-        }, { passive: false });
+        });
 
-        // Update targetScroll on manual scroll / touch / momentum
-        container.addEventListener('scroll', () => {
-            if (!isAnimating) {
-                targetScroll = container.scrollLeft;
+        // Close if resized to desktop (> 900px)
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 900 && mobileNavOverlay.classList.contains('is-active')) {
+                closeMenu();
             }
         }, { passive: true });
-
-        // Drag-to-pan support with distance threshold so clicks still open external links cleanly
-        let isDown = false;
-        let startX = 0;
-        let scrollStart = 0;
-        let draggedDistance = 0;
-
-        container.addEventListener('mousedown', (e) => {
-            if (e.button !== 0) return;
-            isDown = true;
-            draggedDistance = 0;
-            container.classList.add('is-dragging');
-            startX = e.pageX - container.offsetLeft;
-            scrollStart = container.scrollLeft;
-        });
-
-        window.addEventListener('mouseup', () => {
-            if (isDown) {
-                isDown = false;
-                container.classList.remove('is-dragging');
-                targetScroll = container.scrollLeft;
-            }
-        });
-
-        container.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            const x = e.pageX - container.offsetLeft;
-            const moveDelta = x - startX;
-            draggedDistance += Math.abs(moveDelta);
-            if (draggedDistance > 5) {
-                e.preventDefault();
-                const walk = moveDelta * 1.5;
-                container.scrollLeft = scrollStart - walk;
-                targetScroll = container.scrollLeft;
-            }
-        });
-
-        // Prevent accidental link navigation when user drags the timeline
-        container.addEventListener('click', (e) => {
-            if (draggedDistance > 5) {
-                e.preventDefault();
-                e.stopPropagation();
-            }
-        }, true);
     }
 
     /* ========================================================================
@@ -1235,6 +1373,7 @@
         initSmoothScrollAndNavSpy();
         initTextScrambleMorph();
         initApplicationsScroll();
+        initMobileNav();
         initContactForm();
     }
 
