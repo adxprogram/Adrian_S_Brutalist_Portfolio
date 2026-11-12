@@ -1365,21 +1365,24 @@
         if (!siteHeader || !navToggle || !mobileNavOverlay) return;
 
         const mainScript = Array.from(document.scripts).find(script => script.src.includes('assets/js/main.js'));
+        function createNavigationSound(file) {
+            const url = mainScript
+                ? new URL(`../audio/${file}`, mainScript.src).href
+                : `assets/audio/${file}`;
+            const audio = new Audio(url);
+            audio.preload = 'auto';
+            audio.load();
+            return audio;
+        }
+
         const sounds = {
-            menu: { file: 'gta-menu-sound.mp3', audio: null },
-            nav: { file: 'gta-menu-nav-sound.mp3', audio: null }
+            menu: createNavigationSound('gta-menu-sound.mp3'),
+            nav: createNavigationSound('gta-menu-nav-sound.mp3')
         };
 
-        function playNavigationSound(sound) {
-            if (!sound.audio) {
-                const url = mainScript
-                    ? new URL(`../audio/${sound.file}`, mainScript.src).href
-                    : `assets/audio/${sound.file}`;
-                sound.audio = new Audio(url);
-            }
-
-            sound.audio.currentTime = 0;
-            const playback = sound.audio.play();
+        function playNavigationSound(audio) {
+            audio.currentTime = 0;
+            const playback = audio.play();
             if (playback !== undefined) {
                 playback.catch(error => {
                     if (error.name !== 'AbortError') {
@@ -1387,6 +1390,7 @@
                     }
                 });
             }
+            return playback;
         }
 
         function openMenu() {
@@ -1438,9 +1442,31 @@
 
         // Close menu when any mobile link is tapped
         mobileNavLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                playNavigationSound(sounds.nav);
+            link.addEventListener('click', (event) => {
+                const playback = playNavigationSound(sounds.nav);
                 closeMenu();
+
+                const destination = new URL(link.href, window.location.href);
+                const isStandardClick = event.button === 0
+                    && !event.metaKey
+                    && !event.ctrlKey
+                    && !event.shiftKey
+                    && !event.altKey
+                    && (!link.target || link.target === '_self')
+                    && !link.hasAttribute('download');
+                const isSamePage = destination.origin === window.location.origin
+                    && destination.pathname === window.location.pathname
+                    && destination.search === window.location.search;
+
+                if (!isStandardClick || destination.origin !== window.location.origin || isSamePage) return;
+
+                event.preventDefault();
+                const navigate = () => window.location.assign(destination.href);
+                if (playback === undefined) {
+                    navigate();
+                } else {
+                    playback.then(() => window.setTimeout(navigate, 120), navigate);
+                }
             });
         });
 
