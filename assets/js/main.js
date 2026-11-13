@@ -693,6 +693,7 @@
                     if (displayDesc) displayDesc.textContent = desc;
                     displayContent.style.opacity = '1';
                     displayContent.style.transform = 'translateY(0)';
+                    updateScroller();
                 } else {
                     displayContent.style.transition = 'opacity 90ms ease, transform 90ms ease';
                     displayContent.style.opacity = '0';
@@ -707,9 +708,108 @@
                         displayContent.style.opacity = '1';
                         displayContent.style.transform = 'translateY(0)';
                         fadeTimeout = null;
+                        updateScroller();
                     }, 90);
                 }
             }
+
+            if (window.innerWidth <= 900 && activeSlice && accordion) {
+                const sliceLeft = activeSlice.offsetLeft;
+                const sliceWidth = activeSlice.offsetWidth;
+                const accordionScroll = accordion.scrollLeft;
+                const accordionWidth = accordion.clientWidth;
+
+                if (sliceLeft < accordionScroll) {
+                    accordion.scrollTo({ left: Math.max(0, sliceLeft - 16), behavior: 'smooth' });
+                } else if (sliceLeft + sliceWidth > accordionScroll + accordionWidth) {
+                    accordion.scrollTo({ left: sliceLeft + sliceWidth - accordionWidth + 16, behavior: 'smooth' });
+                }
+            }
+        }
+
+        // Mobile Horizontal Scroller Sync (Strictly Mobile <= 900px)
+        const accordion = document.getElementById('projectsAccordion');
+        const mobileScroller = document.getElementById('projectsMobileScroller');
+        const scrollerTrack = document.getElementById('projectsScrollerTrack');
+        const scrollerThumb = document.getElementById('projectsScrollerThumb');
+        const scrollerPos = document.getElementById('projectsScrollerPos');
+
+        function updateScroller() {
+            if (!accordion || !scrollerTrack || !scrollerThumb) return;
+            if (window.innerWidth > 900) return;
+
+            const scrollWidth = accordion.scrollWidth;
+            const clientWidth = accordion.clientWidth;
+            const maxScroll = scrollWidth - clientWidth;
+
+            if (maxScroll <= 0) {
+                scrollerThumb.style.width = '100%';
+                scrollerThumb.style.transform = 'translate3d(0, 0, 0)';
+                return;
+            }
+
+            const trackWidth = scrollerTrack.clientWidth;
+            const ratio = clientWidth / scrollWidth;
+            const thumbWidth = Math.max(32, Math.round(trackWidth * ratio));
+            scrollerThumb.style.width = `${thumbWidth}px`;
+
+            const maxTravel = trackWidth - thumbWidth;
+            const scrollFraction = Math.min(1, Math.max(0, accordion.scrollLeft / maxScroll));
+            const thumbLeft = Math.round(scrollFraction * maxTravel);
+            scrollerThumb.style.transform = `translate3d(${thumbLeft}px, 0, 0)`;
+
+            if (scrollerPos) {
+                const num = String(currentIndex + 1).padStart(2, '0');
+                const total = String(slices.length).padStart(2, '0');
+                scrollerPos.textContent = `// ${num} / ${total}`;
+            }
+        }
+
+        if (accordion && scrollerTrack) {
+            accordion.addEventListener('scroll', updateScroller, { passive: true });
+            window.addEventListener('resize', updateScroller);
+
+            let isDragging = false;
+
+            const handleTrackScroll = (clientX) => {
+                const rect = scrollerTrack.getBoundingClientRect();
+                const trackWidth = rect.width;
+                const maxScroll = accordion.scrollWidth - accordion.clientWidth;
+                if (trackWidth <= 0 || maxScroll <= 0) return;
+
+                const thumbWidth = scrollerThumb.clientWidth || (trackWidth * (accordion.clientWidth / accordion.scrollWidth));
+                const maxTravel = trackWidth - thumbWidth;
+                if (maxTravel <= 0) return;
+
+                const clickX = clientX - rect.left - (thumbWidth / 2);
+                const fraction = Math.min(1, Math.max(0, clickX / maxTravel));
+                accordion.scrollLeft = fraction * maxScroll;
+            };
+
+            scrollerTrack.addEventListener('pointerdown', (e) => {
+                isDragging = true;
+                try { scrollerTrack.setPointerCapture(e.pointerId); } catch (_) {}
+                handleTrackScroll(e.clientX);
+            });
+
+            scrollerTrack.addEventListener('pointermove', (e) => {
+                if (isDragging) {
+                    handleTrackScroll(e.clientX);
+                }
+            });
+
+            const stopDragging = (e) => {
+                if (isDragging) {
+                    isDragging = false;
+                    try { scrollerTrack.releasePointerCapture(e.pointerId); } catch (_) {}
+                }
+            };
+
+            scrollerTrack.addEventListener('pointerup', stopDragging);
+            scrollerTrack.addEventListener('pointercancel', stopDragging);
+
+            setTimeout(updateScroller, 120);
+        }
         }
 
         slices.forEach((slice, index) => {
@@ -999,9 +1099,12 @@
                 sIdx = sections.length - 1;
             } else {
                 for (let i = 0; i < sections.length; i++) {
-                    // getBoundingClientRect, not offsetTop: a GSAP pin-spacer around
-                    // #tools would make its offsetTop 0 and hijack the active state
-                    const top = sections[i].getBoundingClientRect().top + window.scrollY;
+                    // If wrapped in a GSAP .pin-spacer, measure the spacer so the document
+                    // start position stays rock-solid while the section is fixed-pinned
+                    const anchorEl = sections[i].parentElement && sections[i].parentElement.classList.contains('pin-spacer')
+                        ? sections[i].parentElement
+                        : sections[i];
+                    const top = anchorEl.getBoundingClientRect().top + window.scrollY;
                     if (scrollPos >= top) {
                         sIdx = i;
                     }
@@ -1079,7 +1182,11 @@
                 clearTimeout(manualScrollTimer);
                 setActiveNav(targetId);
 
-                targetElement.scrollIntoView({
+                const scrollTarget = targetElement.parentElement && targetElement.parentElement.classList.contains('pin-spacer')
+                    ? targetElement.parentElement
+                    : targetElement;
+
+                scrollTarget.scrollIntoView({
                     behavior: 'smooth',
                     block: 'start'
                 });
@@ -1100,7 +1207,12 @@
         // Live document position of a section. NOT offsetTop: the #tools section is
         // pinned by GSAP inside a positioned pin-spacer, which makes its offsetTop 0
         // and would mark "tools" active from the very top of the page.
-        const sectionTop = (el) => el.getBoundingClientRect().top + window.scrollY;
+        const sectionTop = (el) => {
+            const anchorEl = el.parentElement && el.parentElement.classList.contains('pin-spacer')
+                ? el.parentElement
+                : el;
+            return anchorEl.getBoundingClientRect().top + window.scrollY;
+        };
 
         function getCurrentSectionId() {
             const y = window.scrollY;
@@ -1298,8 +1410,8 @@
         const track = document.getElementById('applicationsTrack');
         if (!toolsSection || !runway || !container || !track) return;
 
-        // Distance needed for After Effects to reach the right edge of the container
-        const getTravelDistance = () => Math.max(0, track.scrollWidth - container.clientWidth);
+        // Round to whole pixels to prevent sub-pixel jitter on pin/unpin
+        const getTravelDistance = () => Math.max(0, Math.round(track.scrollWidth - container.clientWidth));
 
         const enableNativeScroll = () => {
             container.style.overflowX = 'auto';
@@ -1313,27 +1425,50 @@
         }
 
         gsap.registerPlugin(ScrollTrigger);
+
+        // Prevent mobile/desktop address-bar or minor layout shifts from causing pin jumps
+        ScrollTrigger.config({
+            ignoreMobileResize: true
+        });
+
         const mm = gsap.matchMedia();
 
         // Desktop (> 900px): Freeze the #tools viewport with Specializations + Applications visible
         mm.add('(min-width: 901px)', () => {
-            const toolsSection = document.getElementById('tools');
-            
-            gsap.to(track, {
+            // Pre-promote both the pinned section and horizontal track to GPU layers
+            // BEFORE ScrollTrigger pins them so there is zero layer-creation flick
+            gsap.set(toolsSection, { force3D: true });
+            gsap.set(track, { force3D: true, x: 0 });
+
+            const horizontalTween = gsap.to(track, {
                 x: () => -getTravelDistance(),
                 ease: 'none',
+                force3D: true,
                 scrollTrigger: {
+                    id: 'toolsHorizontalPin',
                     trigger: toolsSection,
-                    // Pins as soon as both Specializations and Applications are in view
                     start: 'bottom bottom-=40',
                     end: () => `+=${getTravelDistance()}`,
                     pin: toolsSection,
                     pinSpacing: true,
-                    scrub: 1,
-                    anticipatePin: 1,
+                    scrub: 0.6,              // Responsive, butter-smooth catch-up without long lag
+                    anticipatePin: 0.35,     // Lowered from 1 to eliminate the pre-pin snap/flick
+                    fastScrollEnd: true,     // Prevents glitching when flick-scrolling fast past section
                     invalidateOnRefresh: true
                 }
             });
+
+            // Refresh automatically if lazy images inside the track or above it finish loading
+            const refreshOnResize = new ResizeObserver(() => {
+                ScrollTrigger.refresh();
+            });
+            refreshOnResize.observe(track);
+
+            return () => {
+                refreshOnResize.disconnect();
+                horizontalTween.kill();
+                gsap.set([toolsSection, track], { clearProps: 'transform' });
+            };
         });
 
         // Mobile / tablet (<= 900px): Native touch swipe
@@ -1350,7 +1485,6 @@
         });
 
         window.addEventListener('load', () => ScrollTrigger.refresh());
-        setTimeout(() => ScrollTrigger.refresh(), 200);
     }
 
     /* ========================================================================

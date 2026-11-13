@@ -347,7 +347,8 @@ body::before {
     user-select: none;
     opacity: 0;
     visibility: hidden;
-    transform: translateZ(0);
+    transform: translateZ(0) scale(1.04);
+    transform-origin: right center;
     will-change: opacity;
     transition: opacity var(--transition-gaze), visibility 0s var(--transition-gaze);
 }
@@ -405,6 +406,10 @@ body::before {
     display: block;
     object-fit: contain;
     filter: grayscale(100%);
+}
+
+.portrait-cat-button {
+    display: none;
 }
 
 /* --- SECONDARY PAGES (Clean sharp solid blocks as per moodboard) -------- */
@@ -2024,6 +2029,16 @@ span.app-name {
     margin-bottom: 2.5rem;
 }
 
+.case-study-wrapper .page-title,
+.case-study-hero .page-title {
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    line-height: 0.95;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+}
+
 .case-study-image-frame {
     width: 100%;
     max-height: 520px;
@@ -2135,7 +2150,7 @@ span.app-name {
         color: var(--color-black);
     }
 
-    .nav-toggle-icon {
+    .nav-toggle-label {
         display: block;
         line-height: 1;
         font-weight: 800;
@@ -3182,9 +3197,7 @@ span.app-name {
         font-size: 0.82rem;
     }
 
-    /* --- Portrait: no box, anchored to the bottom, full-bleed on phones ---
-           The photo is a tight head-and-shoulders cut-out, so we anchor it to
-           its bottom edge (50% 100%) and let the shoulders run off the hero. */
+    /* --- Portrait: centered below the intro, with the head and shirt in frame. */
     .hero-right-pane {
         --portrait-ratio: 1 / 1.15;     /* width / height of the visible area */
         --portrait-pos: 50% 100%;       /* lower y% = more headroom shown      */
@@ -3263,4 +3276,329 @@ html::before {
     background-size: 128px 128px;
     background-repeat: repeat;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' width='256' height='256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-0.7'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ========================================================================
+   SECTION ALIGNMENT: Experience / Tools / Applications / Contact
+   share the exact same left/right edges as the Projects section
+   ("PREVIOUS WORKS & SYSTEMS" title + boxes):
+     max-width 1720px, gutter clamp(2rem, 5vw, 5.5rem)  (1.5rem <=900px, 1rem <=600px)
+   The gutter lives on .page-container (like .projects-*-container),
+   so .page-wrapper adds no side padding of its own.
+   Keep this block LAST so it wins over the older .page-wrapper rules above.
+   ======================================================================== */
+.page-wrapper {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.page-container {
+    width: 100%;
+    max-width: 1720px;
+    margin: 0 auto;
+    padding-left: clamp(2rem, 5vw, 5.5rem);
+    padding-right: clamp(2rem, 5vw, 5.5rem);
+    box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+    .page-wrapper {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .page-container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .page-wrapper {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .page-container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .applications-runway,
+    .applications-sticky-stage,
+    .applications-scroll-container {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    .case-study-wrapper {
+        padding: 5.5rem 1.5rem 3rem;
+    }
+
+    .case-study-wrapper .page-title {
+        margin-top: 0;
+        font-size: clamp(1.7rem, 7vw, 2.8rem);
+        line-height: 1.05;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .case-study-hero {
+        margin-bottom: 1.5rem;
+    }
+
+    .case-study-image-frame {
+        max-height: none;
+        margin: 1.25rem 0;
+    }
+
+    .case-study-image {
+        height: auto;
+        max-height: 70vh;
+        object-fit: contain;
+    }
+
+    .page-placeholder-card {
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 600px) {
+    body::before {
+        animation: none;
+    }
+
+    .hero-right-pane {
+        --portrait-ratio: 7 / 10;
+        --portrait-pos: 50% 0%;
+        margin: 1rem auto 0;
+    }
+
+    .applications-runway {
+        overflow: visible;
+    }
+
+    .applications-scroll-container {
+        overflow: visible !important;
+    }
+
+    .applications-track {
+        display: grid !important;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        width: 100% !important;
+        gap: 1rem 0.5rem;
+        padding: 1rem 0 0;
+        transform: none !important;
+    }
+
+    .applications-axis,
+    .app-node {
+        display: none;
+    }
+
+    .app-item {
+        width: auto;
+        min-width: 0;
+        gap: 0.45rem;
+    }
+
+    .app-icon-wrap {
+        width: 100%;
+        height: 3rem;
+    }
+
+    .app-logo {
+        max-width: 2.5rem;
+        max-height: 2.5rem;
+    }
+
+    .app-name,
+    span.app-name {
+        font-size: 0.68rem;
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .case-study-wrapper {
+        padding: 4.8rem 1rem 2.5rem;
+    }
+}
+
+@media (hover: none), (pointer: coarse) {
+    .app-item:hover {
+        transform: none;
+    }
+
+    .app-item:hover .app-logo {
+        transform: none;
+    }
+}
+
+@media (max-width: 900px) {
+    .hero-right-pane {
+        --portrait-pos: 50% 25%;
+    }
+
+    .site-header {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 64px;
+        padding: 0;
+        justify-content: center;
+        background: var(--color-black);
+        pointer-events: auto;
+        transition: opacity 220ms ease;
+    }
+
+    .site-header.is-scroll-hidden {
+        opacity: 0 !important;
+        pointer-events: none;
+    }
+
+    .site-header.is-scroll-hidden .nav-toggle,
+    .site-header.is-scroll-hidden .mobile-nav-overlay {
+        pointer-events: none !important;
+    }
+
+    .nav-toggle,
+    .nav-toggle.is-open {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: var(--color-black);
+        color: var(--color-white);
+        font-family: var(--font-body);
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.01em;
+        text-transform: lowercase;
+        transform: none;
+    }
+
+    .nav-toggle:active {
+        transform: none;
+    }
+
+    .nav-toggle-label {
+        display: block;
+        line-height: 1;
+        font-weight: inherit;
+        user-select: none;
+    }
+
+    .portrait-cat-button {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        z-index: 12;
+        display: grid !important;
+        place-items: center;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        border: 2px solid var(--color-white);
+        background: var(--color-black);
+        color: var(--color-white);
+        box-shadow: 0 3px 0 var(--color-black);
+        font-size: 1.45rem;
+        line-height: 1;
+        cursor: pointer;
+        pointer-events: auto;
+        transition: transform 160ms ease, background-color 160ms ease, color 160ms ease;
+    }
+
+    .portrait-cat-button span {
+        filter: grayscale(1) brightness(0) invert(1);
+    }
+
+    .portrait-cat-button[aria-pressed="true"] {
+        border-color: var(--color-black);
+        background: var(--color-white);
+        color: var(--color-black);
+    }
+
+    .portrait-cat-button[aria-pressed="true"] span {
+        filter: grayscale(1);
+    }
+
+    .portrait-cat-button:active {
+        transform: translateY(2px);
+        box-shadow: 0 1px 0 var(--color-black);
+    }
+
+    .hero-right-pane .portrait-top-gif {
+        top: 50%;
+        left: 50%;
+        width: min(82%, 300px);
+    }
+
+    .hero-right-pane .portrait-top-gif.is-active {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .hero-right-pane .portrait-top-gif.is-active .top-gif-img {
+        display: block !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .hero-right-pane.is-cat-active .portrait-layer.layer-0 {
+        opacity: 0 !important;
+        visibility: hidden !important;
+    }
+
+    .hero-right-pane .portrait-layer.layer-0,
+    .hero-right-pane .portrait-layer.is-base {
+        left: -4% !important;
+        width: 104% !important;
+    }
+}
+
+/* ========================================================================
+   FOOTER: same grain texture as the rest of the page
+   ======================================================================== */
+.site-footer {
+    isolation: isolate;               /* keep the blend inside the footer */
+}
+
+.site-footer::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.22;
+    mix-blend-mode: overlay;
+    background-size: 128px 128px;
+    background-repeat: repeat;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' width='256' height='256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0.33 0.33 0.33 0 0 0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncG type='linear' slope='2.4' intercept='-0.7'/%3E%3CfeFuncB type='linear' slope='2.4' intercept='-0.7'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.site-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;              /* horizontal center */
+    justify-content: center;          /* vertical center */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.site-footer > * {
+    position: relative;
+    z-index: 1;                       /* copyright text stays above the grain */
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+.site-footer .copyright {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
 }

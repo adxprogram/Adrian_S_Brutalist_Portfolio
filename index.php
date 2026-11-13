@@ -198,6 +198,16 @@ require_once __DIR__ . '/includes/header.php';
                     </a>
                 <?php endforeach; ?>
             </div>
+
+            <!-- Mobile Horizontal Scroller Track (Strictly Mobile <= 900px) -->
+            <div class="projects-mobile-scroller" id="projectsMobileScroller" aria-label="Projects horizontal scrollbar">
+                <div class="projects-scroller-meta">
+                    <span class="scroller-pos" id="projectsScrollerPos">// 01 / 06</span>
+                </div>
+                <div class="projects-scroller-track" id="projectsScrollerTrack">
+                    <div class="projects-scroller-thumb" id="projectsScrollerThumb"></div>
+                </div>
+            </div>
         </div>
 
         <!-- 3. Foundational Archive (Reused Previous Projects) -->
@@ -448,11 +458,9 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="discipline-icon-box" aria-hidden="true">
                             <img src="assets/images/tools/bars.png" alt="Web Development Icon" class="discipline-icon" />
                         </div>
-                        <span class="discipline-index">SPEC // 01</span>
                     </div>
 
                     <div class="discipline-info">
-                        <span class="discipline-sub">SYSTEMS &amp; INTERFACES</span>
                         <h4 class="discipline-title">Web Development</h4>
                         <p class="discipline-desc">
                             Websites built to work across all devices with fast performance, clean semantic layouts, and responsive interaction models.
@@ -470,11 +478,9 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="discipline-icon-box" aria-hidden="true">
                             <img src="assets/images/tools/paint.png" alt="Graphic Design Icon" class="discipline-icon" />
                         </div>
-                        <span class="discipline-index">SPEC // 02</span>
                     </div>
 
                     <div class="discipline-info">
-                        <span class="discipline-sub">IDENTITY &amp; VISUAL LOGIC</span>
                         <h4 class="discipline-title">Graphic Design</h4>
                         <p class="discipline-desc">
                             Visually striking designs balancing creativity and functionality. Typography systems, branding, and assets crafted for digital platforms.
@@ -492,11 +498,9 @@ require_once __DIR__ . '/includes/header.php';
                         <div class="discipline-icon-box" aria-hidden="true">
                             <img src="assets/images/tools/scissor.png" alt="Video Editing Icon" class="discipline-icon" />
                         </div>
-                        <span class="discipline-index">SPEC // 03</span>
                     </div>
 
                     <div class="discipline-info">
-                        <span class="discipline-sub">CINEMA &amp; MOTION DESIGN</span>
                         <h4 class="discipline-title">Video Editing</h4>
                         <p class="discipline-desc">
                             Video editing for social media, marketing, and content creators with smooth transitions, color grading, audio sync, and storytelling.

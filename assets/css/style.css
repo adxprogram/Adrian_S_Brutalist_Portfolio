@@ -932,14 +932,6 @@ body::before {
     display: block;
 }
 
-.discipline-index {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.85rem;
-    font-weight: 800;
-    color: rgba(255, 255, 255, 0.55);
-    letter-spacing: 0.1em;
-}
-
 .discipline-info {
     display: flex;
     flex-direction: column;
@@ -953,14 +945,6 @@ body::before {
     color: var(--color-white);
     line-height: 1.2;
     letter-spacing: -0.01em;
-}
-
-.discipline-sub {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    color: rgba(255, 255, 255, 0.75);
 }
 
 .discipline-desc {
@@ -2014,6 +1998,11 @@ span.app-name {
     pointer-events: none;
 }
 
+/* Projects Mobile Horizontal Scroller (Hidden on Desktop Strictly) */
+.projects-mobile-scroller {
+    display: none !important;
+}
+
 /* Case Study Generic Page Layout */
 .case-study-wrapper {
     position: relative;
@@ -2027,6 +2016,16 @@ span.app-name {
 
 .case-study-hero {
     margin-bottom: 2.5rem;
+}
+
+.case-study-wrapper .page-title,
+.case-study-hero .page-title {
+    margin-top: 0;
+    margin-bottom: 1.25rem;
+    line-height: 0.95;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
 }
 
 .case-study-image-frame {
@@ -3051,6 +3050,18 @@ span.app-name {
 @media (min-width: 901px) {
     #tools {
         padding-bottom: 2rem; /* Reduces bottom space before Contact */
+        overflow: visible;    /* Prevents layer teardown flick when GSAP toggles position: fixed */
+        isolation: isolate;   /* Keeps mix-blend-mode: overlay contained inside #tools without repaint flashes */
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        transform: translateZ(0);
+    }
+
+    /* Since html::before already provides the fixed global concrete grain,
+       hiding the duplicate local grain overlay inside #tools prevents a
+       mix-blend-mode repaint flash at the exact moment of pinning */
+    #tools > .hero-grain-overlay {
+        display: block;
     }
 
     #tools .page-container {
@@ -3073,6 +3084,9 @@ span.app-name {
 
     .applications-track {
         padding: 1.25rem 6rem 2rem 3rem; /* Tightens top/bottom padding around icons */
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+        transform: translate3d(0, 0, 0);
     }
 
     .applications-axis {
@@ -3426,7 +3440,99 @@ html::before {
     }
 }
 
+/* --- MOBILE STRICTLY: COLOR IMAGES BY DEFAULT -------------------------- */
+@media (max-width: 900px), (hover: none) and (pointer: coarse) {
+    /* 1. Projects Split Accordion box images under projects-title morph-text */
+    .projects-accordion .accordion-slice,
+    .accordion-slice,
+    .slice-image {
+        filter: none !important;
+    }
+
+    /* 2. Previous Works & Systems Archive box images under archive-title */
+    .archive-card .archive-image,
+    .archive-image {
+        filter: none !important;
+    }
+
+    /* 3. Certificate preview images */
+    img.cert-image,
+    .cert-image {
+        filter: none !important;
+    }
+
+    /* 4. Applications tool logos */
+    img.app-logo,
+    .app-logo {
+        filter: none !important;
+    }
+}
+
 @media (max-width: 900px) {
+    /* Hide native browser scrollbar on mobile accordion so custom scroller takes over cleanly */
+    .projects-accordion {
+        scrollbar-width: none !important;
+        -ms-overflow-style: none !important;
+    }
+
+    .projects-accordion::-webkit-scrollbar {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+    }
+
+    /* Dedicated Brutalist Horizontal Scroller directly below accordion */
+    .projects-mobile-scroller {
+        display: flex !important;
+        flex-direction: column;
+        width: 100%;
+        background: var(--color-black);
+        padding: 0.7rem 1.25rem 1.15rem 1.25rem;
+        box-sizing: border-box;
+        border-top: 1px solid rgba(255, 255, 255, 0.18);
+        user-select: none;
+    }
+
+    .projects-scroller-meta {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin-bottom: 0.45rem;
+        font-family: 'Space Mono', 'Courier New', Courier, monospace;
+        font-size: 0.68rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        color: rgba(255, 255, 255, 0.65);
+    }
+
+    .scroller-pos {
+        color: var(--color-white);
+        font-weight: 800;
+        letter-spacing: 0.1em;
+    }
+
+    .projects-scroller-track {
+        width: 100%;
+        height: 8px;
+        background: rgba(255, 255, 255, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        position: relative;
+        cursor: pointer;
+        touch-action: none;
+    }
+
+    .projects-scroller-thumb {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 25%;
+        background: var(--color-white);
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+        pointer-events: none;
+        will-change: transform, width;
+    }
+
     .hero-right-pane {
         --portrait-pos: 50% 25%;
     }
