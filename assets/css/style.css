@@ -1998,11 +1998,6 @@ span.app-name {
     pointer-events: none;
 }
 
-/* Projects Mobile Horizontal Scroller (Hidden on Desktop Strictly) */
-.projects-mobile-scroller {
-    display: none !important;
-}
-
 /* Case Study Generic Page Layout */
 .case-study-wrapper {
     position: relative;
@@ -2580,10 +2575,21 @@ span.app-name {
 }
 
 /* --- CUSTOM INVERTED BRUTALIST CURSOR COMPONENT ------------------------- */
-/* Replace native cursor on devices with fine pointer & hover */
+/* Replace native cursor strictly when custom cursor is active on desktop fine-pointer devices */
 @media (hover: hover) and (pointer: fine) {
-    html, body, *, *::before, *::after {
+    html.has-custom-cursor,
+    html.has-custom-cursor body,
+    html.has-custom-cursor *,
+    html.has-custom-cursor *::before,
+    html.has-custom-cursor *::after {
         cursor: none !important;
+    }
+}
+
+/* Ensure custom cursor element is hidden on mobile / touch devices or narrow screens */
+@media (max-width: 900px), (hover: none), (pointer: coarse) {
+    .custom-cursor {
+        display: none !important;
     }
 }
 
@@ -2662,9 +2668,6 @@ span.app-name {
 @media (hover: none), (pointer: coarse) {
     .custom-cursor {
         display: none !important;
-    }
-    html, body, *, *::before, *::after {
-        cursor: auto !important;
     }
 }
 
@@ -3469,70 +3472,6 @@ html::before {
 }
 
 @media (max-width: 900px) {
-    /* Hide native browser scrollbar on mobile accordion so custom scroller takes over cleanly */
-    .projects-accordion {
-        scrollbar-width: none !important;
-        -ms-overflow-style: none !important;
-    }
-
-    .projects-accordion::-webkit-scrollbar {
-        display: none !important;
-        width: 0 !important;
-        height: 0 !important;
-    }
-
-    /* Dedicated Brutalist Horizontal Scroller directly below accordion */
-    .projects-mobile-scroller {
-        display: flex !important;
-        flex-direction: column;
-        width: 100%;
-        background: var(--color-black);
-        padding: 0.7rem 1.25rem 1.15rem 1.25rem;
-        box-sizing: border-box;
-        border-top: 1px solid rgba(255, 255, 255, 0.18);
-        user-select: none;
-    }
-
-    .projects-scroller-meta {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        margin-bottom: 0.45rem;
-        font-family: 'Space Mono', 'Courier New', Courier, monospace;
-        font-size: 0.68rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        color: rgba(255, 255, 255, 0.65);
-    }
-
-    .scroller-pos {
-        color: var(--color-white);
-        font-weight: 800;
-        letter-spacing: 0.1em;
-    }
-
-    .projects-scroller-track {
-        width: 100%;
-        height: 8px;
-        background: rgba(255, 255, 255, 0.22);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        position: relative;
-        cursor: pointer;
-        touch-action: none;
-    }
-
-    .projects-scroller-thumb {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 25%;
-        background: var(--color-white);
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
-        pointer-events: none;
-        will-change: transform, width;
-    }
-
     .hero-right-pane {
         --portrait-pos: 50% 25%;
     }

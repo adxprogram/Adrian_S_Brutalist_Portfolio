@@ -47,9 +47,7 @@
         const cursorTriangleWrap = document.getElementById('cursorTriangleWrap');
         const cursorMorphPoly = document.getElementById('cursorMorphPoly');
 
-        // Strictly isolate desktop cursor: lightweight return on mobile / touch
-        if (window.innerWidth <= 900 || isTouchDevice || !customCursor || !cursorTriangleWrap || !cursorMorphPoly) {
-            if (customCursor) customCursor.style.display = 'none';
+        if (!customCursor || !cursorTriangleWrap || !cursorMorphPoly) {
             return;
         }
 
@@ -59,6 +57,29 @@
         let triangleY = -100;
         let isCursorVisible = false;
         let isMouseDown = false;
+        let isEnabled = false;
+
+        function checkEligibility() {
+            checkDeviceCapabilities();
+            const isFine = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)').matches : true;
+            return window.innerWidth > 900 && !isTouchDevice && isFine;
+        }
+
+        function updateCursorState() {
+            const eligible = checkEligibility();
+            if (eligible !== isEnabled) {
+                isEnabled = eligible;
+                if (!isEnabled) {
+                    document.documentElement.classList.remove('has-custom-cursor');
+                    customCursor.style.display = 'none';
+                    customCursor.classList.remove('is-visible');
+                    customCursor.classList.add('is-hidden');
+                    isCursorVisible = false;
+                } else {
+                    customCursor.style.display = '';
+                }
+            }
+        }
 
         // 8-Node Canonical Geometry Presets
         const CURSOR_SHAPES = {
@@ -98,8 +119,13 @@
             }
         }
 
-        // Mouse coordinates
+        // Mouse coordinates & visibility
         window.addEventListener('mousemove', (e) => {
+            if (!isEnabled) {
+                updateCursorState();
+                if (!isEnabled) return;
+            }
+
             mouseX = e.clientX;
             mouseY = e.clientY;
 
@@ -107,13 +133,19 @@
                 triangleX = mouseX;
                 triangleY = mouseY;
                 customCursor.classList.add('is-visible');
-                customCursor.classList.remove('is-hidden');
+                document.documentElement.classList.add('has-custom-cursor');
                 isCursorVisible = true;
+            }
+
+            // Always ensure cursor is unhidden on mouse movement
+            if (customCursor.classList.contains('is-hidden')) {
+                customCursor.classList.remove('is-hidden');
             }
         }, { passive: true });
 
         // Contextual Element Inspector
         document.addEventListener('mouseover', (e) => {
+            if (!isEnabled) return;
             const target = e.target;
             if (!target || !target.closest) return;
 
@@ -127,6 +159,7 @@
 
         // Mousedown: becomes 4-pointed star
         window.addEventListener('mousedown', () => {
+            if (!isEnabled) return;
             isMouseDown = true;
             targetPoints = CURSOR_SHAPES.STAR_4;
             customCursor.classList.add('is-active');
@@ -134,21 +167,48 @@
 
         // Mouseup: returns to straight 3-line triangle
         window.addEventListener('mouseup', () => {
+            if (!isEnabled) return;
             isMouseDown = false;
             customCursor.classList.remove('is-active');
             targetPoints = CURSOR_SHAPES.TRIANGLE;
         }, { passive: true });
 
-        // Window leave / enter
-        document.addEventListener('mouseleave', () => customCursor.classList.add('is-hidden'));
-        document.addEventListener('mouseenter', () => customCursor.classList.remove('is-hidden'));
+        // Window leave / enter / focus / blur
+        document.addEventListener('mouseleave', () => {
+            if (isEnabled) {
+                customCursor.classList.add('is-hidden');
+            }
+        });
+        document.addEventListener('mouseenter', () => {
+            if (isEnabled && isCursorVisible) {
+                customCursor.classList.remove('is-hidden');
+            }
+        });
+        window.addEventListener('blur', () => {
+            if (isEnabled) {
+                customCursor.classList.add('is-hidden');
+            }
+        });
+        window.addEventListener('focus', () => {
+            if (isEnabled && isCursorVisible) {
+                customCursor.classList.remove('is-hidden');
+            }
+        });
+
+        // Viewport resize handling
+        window.addEventListener('resize', () => {
+            updateCursorState();
+        }, { passive: true });
+
+        // Initialize state immediately
+        updateCursorState();
 
         // Frame rendering loop
         const posLerp = prefersReducedMotion ? 1.0 : 0.22;
         const morphLerp = prefersReducedMotion ? 1.0 : 0.35;
 
         function renderCursor() {
-            if (isCursorVisible) {
+            if (isEnabled && isCursorVisible) {
                 triangleX += (mouseX - triangleX) * posLerp;
                 triangleY += (mouseY - triangleY) * posLerp;
                 cursorTriangleWrap.style.transform = `translate3d(${triangleX.toFixed(2)}px, ${triangleY.toFixed(2)}px, 0) translate(-50%, -50%)`;
@@ -176,7 +236,10 @@
                 }
             },
             getState: function () {
-                return { mouseX, mouseY, triangleX, triangleY, targetPoints };
+                return { mouseX, mouseY, triangleX, triangleY, targetPoints, isEnabled, isCursorVisible };
+            },
+            reinit: function () {
+                updateCursorState();
             }
         };
     }
@@ -693,7 +756,6 @@
                     if (displayDesc) displayDesc.textContent = desc;
                     displayContent.style.opacity = '1';
                     displayContent.style.transform = 'translateY(0)';
-                    updateScroller();
                 } else {
                     displayContent.style.transition = 'opacity 90ms ease, transform 90ms ease';
                     displayContent.style.opacity = '0';
@@ -708,108 +770,9 @@
                         displayContent.style.opacity = '1';
                         displayContent.style.transform = 'translateY(0)';
                         fadeTimeout = null;
-                        updateScroller();
                     }, 90);
                 }
             }
-
-            if (window.innerWidth <= 900 && activeSlice && accordion) {
-                const sliceLeft = activeSlice.offsetLeft;
-                const sliceWidth = activeSlice.offsetWidth;
-                const accordionScroll = accordion.scrollLeft;
-                const accordionWidth = accordion.clientWidth;
-
-                if (sliceLeft < accordionScroll) {
-                    accordion.scrollTo({ left: Math.max(0, sliceLeft - 16), behavior: 'smooth' });
-                } else if (sliceLeft + sliceWidth > accordionScroll + accordionWidth) {
-                    accordion.scrollTo({ left: sliceLeft + sliceWidth - accordionWidth + 16, behavior: 'smooth' });
-                }
-            }
-        }
-
-        // Mobile Horizontal Scroller Sync (Strictly Mobile <= 900px)
-        const accordion = document.getElementById('projectsAccordion');
-        const mobileScroller = document.getElementById('projectsMobileScroller');
-        const scrollerTrack = document.getElementById('projectsScrollerTrack');
-        const scrollerThumb = document.getElementById('projectsScrollerThumb');
-        const scrollerPos = document.getElementById('projectsScrollerPos');
-
-        function updateScroller() {
-            if (!accordion || !scrollerTrack || !scrollerThumb) return;
-            if (window.innerWidth > 900) return;
-
-            const scrollWidth = accordion.scrollWidth;
-            const clientWidth = accordion.clientWidth;
-            const maxScroll = scrollWidth - clientWidth;
-
-            if (maxScroll <= 0) {
-                scrollerThumb.style.width = '100%';
-                scrollerThumb.style.transform = 'translate3d(0, 0, 0)';
-                return;
-            }
-
-            const trackWidth = scrollerTrack.clientWidth;
-            const ratio = clientWidth / scrollWidth;
-            const thumbWidth = Math.max(32, Math.round(trackWidth * ratio));
-            scrollerThumb.style.width = `${thumbWidth}px`;
-
-            const maxTravel = trackWidth - thumbWidth;
-            const scrollFraction = Math.min(1, Math.max(0, accordion.scrollLeft / maxScroll));
-            const thumbLeft = Math.round(scrollFraction * maxTravel);
-            scrollerThumb.style.transform = `translate3d(${thumbLeft}px, 0, 0)`;
-
-            if (scrollerPos) {
-                const num = String(currentIndex + 1).padStart(2, '0');
-                const total = String(slices.length).padStart(2, '0');
-                scrollerPos.textContent = `// ${num} / ${total}`;
-            }
-        }
-
-        if (accordion && scrollerTrack) {
-            accordion.addEventListener('scroll', updateScroller, { passive: true });
-            window.addEventListener('resize', updateScroller);
-
-            let isDragging = false;
-
-            const handleTrackScroll = (clientX) => {
-                const rect = scrollerTrack.getBoundingClientRect();
-                const trackWidth = rect.width;
-                const maxScroll = accordion.scrollWidth - accordion.clientWidth;
-                if (trackWidth <= 0 || maxScroll <= 0) return;
-
-                const thumbWidth = scrollerThumb.clientWidth || (trackWidth * (accordion.clientWidth / accordion.scrollWidth));
-                const maxTravel = trackWidth - thumbWidth;
-                if (maxTravel <= 0) return;
-
-                const clickX = clientX - rect.left - (thumbWidth / 2);
-                const fraction = Math.min(1, Math.max(0, clickX / maxTravel));
-                accordion.scrollLeft = fraction * maxScroll;
-            };
-
-            scrollerTrack.addEventListener('pointerdown', (e) => {
-                isDragging = true;
-                try { scrollerTrack.setPointerCapture(e.pointerId); } catch (_) {}
-                handleTrackScroll(e.clientX);
-            });
-
-            scrollerTrack.addEventListener('pointermove', (e) => {
-                if (isDragging) {
-                    handleTrackScroll(e.clientX);
-                }
-            });
-
-            const stopDragging = (e) => {
-                if (isDragging) {
-                    isDragging = false;
-                    try { scrollerTrack.releasePointerCapture(e.pointerId); } catch (_) {}
-                }
-            };
-
-            scrollerTrack.addEventListener('pointerup', stopDragging);
-            scrollerTrack.addEventListener('pointercancel', stopDragging);
-
-            setTimeout(updateScroller, 120);
-        }
         }
 
         slices.forEach((slice, index) => {

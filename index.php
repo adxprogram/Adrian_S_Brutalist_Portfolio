@@ -198,16 +198,6 @@ require_once __DIR__ . '/includes/header.php';
                     </a>
                 <?php endforeach; ?>
             </div>
-
-            <!-- Mobile Horizontal Scroller Track (Strictly Mobile <= 900px) -->
-            <div class="projects-mobile-scroller" id="projectsMobileScroller" aria-label="Projects horizontal scrollbar">
-                <div class="projects-scroller-meta">
-                    <span class="scroller-pos" id="projectsScrollerPos">// 01 / 06</span>
-                </div>
-                <div class="projects-scroller-track" id="projectsScrollerTrack">
-                    <div class="projects-scroller-thumb" id="projectsScrollerThumb"></div>
-                </div>
-            </div>
         </div>
 
         <!-- 3. Foundational Archive (Reused Previous Projects) -->
